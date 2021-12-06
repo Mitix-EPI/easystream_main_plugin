@@ -1,0 +1,4 @@
+/usr/local/lib/obs-plugins/obs-easyStream.so
+/usr/local/share/obs/obs-plugins/obs-easyStream/locale/de-DE.ini
+/usr/local/share/obs/obs-plugins/obs-easyStream/locale/en-US.ini
+/usr/local/share/obs/obs-plugins/obs-easyStream/locale/it_IT.ini

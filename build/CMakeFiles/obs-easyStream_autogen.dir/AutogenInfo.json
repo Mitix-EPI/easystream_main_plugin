@@ -1,0 +1,90 @@
+{
+	"BUILD_DIR" : "/home/julesminguet/obs-easyStream/build/obs-easyStream_autogen",
+	"CMAKE_BINARY_DIR" : "/home/julesminguet/obs-easyStream/build",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/julesminguet/obs-easyStream/build",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/julesminguet/obs-easyStream",
+	"CMAKE_EXECUTABLE" : "/usr/bin/cmake",
+	"CMAKE_SOURCE_DIR" : "/home/julesminguet/obs-easyStream",
+	"HEADERS" : 
+	[
+		[
+			"/home/julesminguet/obs-easyStream/src/plugin-macros.generated.h",
+			"MU",
+			"UVLADIE3JM/moc_plugin-macros.generated.cpp"
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/home/julesminguet/obs-easyStream/build/obs-easyStream_autogen/include",
+	"MOC_COMPILATION_FILE" : "/home/julesminguet/obs-easyStream/build/obs-easyStream_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : 
+	[
+		"HAVE_OBSCONFIG_H",
+		"QT_CORE_LIB",
+		"QT_GUI_LIB",
+		"QT_NO_DEBUG",
+		"QT_WIDGETS_LIB",
+		"obs_easyStream_EXPORTS"
+	],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/home/julesminguet/obs-easyStream/build",
+		"/home/julesminguet/obs-easyStream",
+		"/UI/obs-frontend-api",
+		"/usr/include/obs",
+		"/usr/include/x86_64-linux-gnu/qt5",
+		"/usr/include/x86_64-linux-gnu/qt5/QtCore",
+		"/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++",
+		"/usr/include/x86_64-linux-gnu/qt5/QtWidgets",
+		"/usr/include/x86_64-linux-gnu/qt5/QtGui",
+		"/usr/include/c++/9",
+		"/usr/include/x86_64-linux-gnu/c++/9",
+		"/usr/include/c++/9/backward",
+		"/usr/lib/gcc/x86_64-linux-gnu/9/include",
+		"/usr/local/include",
+		"/usr/include/x86_64-linux-gnu",
+		"/usr/include"
+	],
+	"MOC_MACRO_NAMES" : [ "Q_OBJECT", "Q_GADGET", "Q_NAMESPACE" ],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : true,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/usr/bin/c++",
+		"-dM",
+		"-E",
+		"-c",
+		"/usr/share/cmake-3.16/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/home/julesminguet/obs-easyStream/build/obs-easyStream_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : 
+	[
+		"/home/julesminguet/obs-easyStream/build/ui_obs-text-slideshow-dock.h"
+	],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 6,
+	"PARSE_CACHE_FILE" : "/home/julesminguet/obs-easyStream/build/CMakeFiles/obs-easyStream_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/usr/lib/qt5/bin/moc",
+	"QT_UIC_EXECUTABLE" : "/usr/lib/qt5/bin/uic",
+	"QT_VERSION_MAJOR" : 5,
+	"SETTINGS_FILE" : "/home/julesminguet/obs-easyStream/build/CMakeFiles/obs-easyStream_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[ "/home/julesminguet/obs-easyStream/src/plugin-main.cpp", "MU" ]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : 
+	[
+		"/home/julesminguet/obs-easyStream/build/ui_obs-text-slideshow-dock.h"
+	],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}

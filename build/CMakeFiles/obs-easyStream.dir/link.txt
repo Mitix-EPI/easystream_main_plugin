@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC  -O3 -O3 -DNDEBUG  -shared  -o obs-easyStream.so CMakeFiles/obs-easyStream.dir/obs-easyStream_autogen/mocs_compilation.cpp.o CMakeFiles/obs-easyStream.dir/src/plugin-main.cpp.o  /usr/lib/libobs.so.0 /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.12.8 -lobs-frontend-api /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.12.8 /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.12.8 
