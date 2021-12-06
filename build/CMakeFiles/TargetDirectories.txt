@@ -1,8 +1,0 @@
-/home/julesminguet/obs-easyStream/build/CMakeFiles/install/strip.dir
-/home/julesminguet/obs-easyStream/build/CMakeFiles/install/local.dir
-/home/julesminguet/obs-easyStream/build/CMakeFiles/install.dir
-/home/julesminguet/obs-easyStream/build/CMakeFiles/list_install_components.dir
-/home/julesminguet/obs-easyStream/build/CMakeFiles/rebuild_cache.dir
-/home/julesminguet/obs-easyStream/build/CMakeFiles/edit_cache.dir
-/home/julesminguet/obs-easyStream/build/CMakeFiles/obs-easyStream.dir
-/home/julesminguet/obs-easyStream/build/CMakeFiles/obs-easyStream_autogen.dir
