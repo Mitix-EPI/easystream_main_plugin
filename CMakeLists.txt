@@ -207,18 +207,18 @@ if(UNIX AND NOT APPLE)
 
 	file(GLOB locale_files data/locale/*.ini)
 
-    # if(${BUILD_UBUNTU})
+    if(${BUILD_UBUNTU})
         install(TARGETS ${CMAKE_PROJECT_NAME}
             LIBRARY DESTINATION "/usr/lib/obs-plugins")
         install(FILES ${locale_files}
             DESTINATION "/usr/share/obs/obs-plugins/${CMAKE_PROJECT_NAME}/locale")
-    # else()
-    #     install(TARGETS ${CMAKE_PROJECT_NAME}
-    #         LIBRARY DESTINATION "${CMAKE_INSTALL_FULL_LIBDIR}/obs-plugins")
+    else()
+        install(TARGETS ${CMAKE_PROJECT_NAME}
+            LIBRARY DESTINATION "${CMAKE_INSTALL_FULL_LIBDIR}/obs-plugins")
 
-    #     install(FILES ${locale_files}
-    #         DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/obs/obs-plugins/${CMAKE_PROJECT_NAME}/locale")
-    # endif()
+        install(FILES ${locale_files}
+            DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/obs/obs-plugins/${CMAKE_PROJECT_NAME}/locale")
+    endif()
 endif()
 # --- End of section ---
 
