@@ -45,3 +45,5 @@ cmake_install.cmake
 cmake_uninstall.cmake
 *_autogen
 ci/obs-studio
+
+.DS_Store
