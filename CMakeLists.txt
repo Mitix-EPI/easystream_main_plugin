@@ -65,13 +65,13 @@ set(PLUGIN_SOURCES
 if(WIN32)
     set(PLUGIN_SOURCES 
         ${PLUGIN_SOURCES} 
-        src/obs-text-gdiplus-slideshow.cpp)
+        src/plugin-main.cpp)
 endif()
 
 set(PLUGIN_HEADERS
 	src/plugin-macros.generated.h)
 
-qt5_wrap_ui(PLUGIN_UI_HEADERS src/obs-text-slideshow-dock.ui)
+qt5_wrap_ui(PLUGIN_UI_HEADERS src/plugin-main.ui)
 
 # --- Platform-independent build settings ---
 add_library(${CMAKE_PROJECT_NAME} MODULE ${PLUGIN_SOURCES} ${PLUGIN_HEADERS} ${PLUGIN_UI_HEADERS})
@@ -207,18 +207,18 @@ if(UNIX AND NOT APPLE)
 
 	file(GLOB locale_files data/locale/*.ini)
 
-    if(${BUILD_UBUNTU})
+    # if(${BUILD_UBUNTU})
         install(TARGETS ${CMAKE_PROJECT_NAME}
             LIBRARY DESTINATION "/usr/lib/obs-plugins")
         install(FILES ${locale_files}
             DESTINATION "/usr/share/obs/obs-plugins/${CMAKE_PROJECT_NAME}/locale")
-    else()
-        install(TARGETS ${CMAKE_PROJECT_NAME}
-            LIBRARY DESTINATION "${CMAKE_INSTALL_FULL_LIBDIR}/obs-plugins")
+    # else()
+    #     install(TARGETS ${CMAKE_PROJECT_NAME}
+    #         LIBRARY DESTINATION "${CMAKE_INSTALL_FULL_LIBDIR}/obs-plugins")
 
-        install(FILES ${locale_files}
-            DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/obs/obs-plugins/${CMAKE_PROJECT_NAME}/locale")
-    endif()
+    #     install(FILES ${locale_files}
+    #         DESTINATION "${CMAKE_INSTALL_FULL_DATAROOTDIR}/obs/obs-plugins/${CMAKE_PROJECT_NAME}/locale")
+    # endif()
 endif()
 # --- End of section ---
 
