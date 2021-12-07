@@ -45,7 +45,6 @@ std::vector<InputInfo> GetInputList(std::string inputKind)
 	inputInfo.inputKind = inputKind;
 
 	auto inputEnumProc = [](void *param, obs_source_t *input) {
-        blog(LOG_INFO, "input name:");
 		if (obs_source_get_type(input) != OBS_SOURCE_TYPE_INPUT)
 			return true;
 
@@ -55,6 +54,9 @@ std::vector<InputInfo> GetInputList(std::string inputKind)
 
 		if (inputInfo->inputKind.empty() || inputInfo->inputKind != inputKind)
 			return true;
+
+		blog(LOG_INFO, "volume: %f",  obs_mul_to_db(obs_source_get_volume(input)));
+		obs_source_set_volume(input, 0.0f);
 
 		InputInfo value;
 		value.name = obs_source_get_name(input);
@@ -67,29 +69,6 @@ std::vector<InputInfo> GetInputList(std::string inputKind)
 
 	return inputInfo.inputs;
 }
-
-// std::vector<InputInfo> GetInputList2()
-// {
-// 	EnumInputInfo inputInfo;
-
-// 	auto inputEnumProc = [](void *param, obs_source_t *input) {
-//         blog(LOG_INFO, "input name:");
-// 		// Sanity check in case the API changes
-// 		if (obs_source_get_type(input) != OBS_SOURCE_TYPE_INPUT)
-// 			return true;
-
-// 		auto inputInfo = reinterpret_cast<EnumInputInfo*>(param);
-    
-// 		InputInfo value;
-// 		value.name = obs_source_get_name(input);
-
-// 		inputInfo->inputs.push_back(value);
-// 		return true;
-// 	};
-// 	obs_enum_sources(inputEnumProc, &inputInfo);
-
-// 	return inputInfo.inputs;
-// }
 
 std::vector<std::string> GetInputKindList(bool unversioned, bool includeDisabled)
 {
@@ -112,16 +91,9 @@ std::vector<std::string> GetInputKindList(bool unversioned, bool includeDisabled
 	return ret;
 }
 
-bool obs_module_load(void)
+void source_created_signal(void *param, calldata_t *data)
 {
-    blog(LOG_INFO, "plugin loaded successfully (version %s)", PLUGIN_VERSION);
-
-    // std::vector<InputInfo> values = GetInputList2();
-    // for (auto &value : values) {
-    //     blog(LOG_INFO, "  name: %s", value.name.c_str());
-    // }
-
-    std::vector<std::string> inputKinds = GetInputKindList(false, true);
+	std::vector<std::string> inputKinds = GetInputKindList(false, true);
     blog(LOG_INFO, "-----------------------------------------");
     for (auto &inputKind : inputKinds) {
         blog(LOG_INFO, "input kind: %s", inputKind.c_str());
@@ -131,16 +103,23 @@ bool obs_module_load(void)
         }
     }
     blog(LOG_INFO, "-----------------------------------------");
-    return true;
 }
 
-// void obs_source_load(void *data, obs_source_t *source)
-// {
-//     blog(LOG_INFO, "name: %s", obs_source_get_name(source));
-// }
+
+bool obs_module_load(void)
+{
+    blog(LOG_INFO, "plugin loaded successfully (version %s)", PLUGIN_VERSION);
+
+	auto iso = obs_get_signal_handler();
+
+	signal_handler_connect(iso, "source_create", source_created_signal, nullptr);
+
+    return true;
+}
 
 
 void obs_module_unload()
 {
     blog(LOG_INFO, "plugin unloaded");
 }
+
