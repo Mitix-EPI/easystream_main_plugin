@@ -47,3 +47,5 @@ cmake_uninstall.cmake
 ci/obs-studio
 
 .DS_Store
+
+.vscode
