@@ -36,7 +36,7 @@
 																		<key>GID</key>
 																		<integer>80</integer>
 																		<key>PATH</key>
-																		<string>../build/obs-easyStream.so</string>
+																		<string>../build/obs-easystream-main-plugin.so</string>
 																		<key>PATH_TYPE</key>
 																		<integer>1</integer>
 																		<key>PERMISSIONS</key>
@@ -80,7 +80,7 @@
 														<key>GID</key>
 														<integer>80</integer>
 														<key>PATH</key>
-														<string>obs-easyStream</string>
+														<string>obs-easystream-main-plugin</string>
 														<key>PATH_TYPE</key>
 														<integer>0</integer>
 														<key>PERMISSIONS</key>
@@ -514,7 +514,7 @@
 			<key>CONCLUSION_ACTION</key>
 			<integer>0</integer>
 			<key>IDENTIFIER</key>
-			<string>com.example.obs-easyStream</string>
+			<string>io.easystream.obs-easystream-main-plugin</string>
 			<key>OVERWRITE_PERMISSIONS</key>
 			<false/>
 			<key>VERSION</key>
@@ -715,7 +715,7 @@
 				</dict>
 			</array>
 			<key>NAME</key>
-			<string>obs-easyStream</string>
+			<string>obs-easystream-main-plugin</string>
 		</dict>
 	</dict>
 	<key>TYPE</key>

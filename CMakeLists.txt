@@ -60,7 +60,7 @@ configure_file(
 )
 
 set(PLUGIN_SOURCES
-	src/plugin-main.cpp)
+    src/plugin-main.cpp)
 
 if(WIN32)
     set(PLUGIN_SOURCES 
@@ -71,10 +71,8 @@ endif()
 set(PLUGIN_HEADERS
 	src/plugin-macros.generated.h)
 
-qt5_wrap_ui(PLUGIN_UI_HEADERS src/plugin-main.ui)
-
 # --- Platform-independent build settings ---
-add_library(${CMAKE_PROJECT_NAME} MODULE ${PLUGIN_SOURCES} ${PLUGIN_HEADERS} ${PLUGIN_UI_HEADERS})
+add_library(${CMAKE_PROJECT_NAME} MODULE ${PLUGIN_SOURCES} ${PLUGIN_HEADERS})
 
 include_directories(
 	"${LIBOBS_INCLUDE_DIR}/../UI/obs-frontend-api"
