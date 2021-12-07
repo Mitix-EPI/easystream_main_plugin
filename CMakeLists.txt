@@ -22,6 +22,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 
+
 # In case you need C++
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -69,7 +70,9 @@ if(WIN32)
 endif()
 
 set(PLUGIN_HEADERS
-	src/plugin-macros.generated.h)
+	src/plugin-macros.generated.h
+    include/json.hpp
+)
 
 # --- Platform-independent build settings ---
 add_library(${CMAKE_PROJECT_NAME} MODULE ${PLUGIN_SOURCES} ${PLUGIN_HEADERS})
