@@ -27,7 +27,7 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 OBS_DECLARE_MODULE()
 OBS_MODULE_USE_DEFAULT_LOCALE(PLUGIN_NAME, "en-US")
 
-es::obs::SourceTracker *tracker = new es::obs::SourceTracker();
+std::shared_ptr<es::obs::SourceTracker> tracker = std::make_shared<es::obs::SourceTracker>(es::obs::SourceTracker());
 
 bool obs_module_load(void)
 {
@@ -41,6 +41,6 @@ bool obs_module_load(void)
 
 void obs_module_unload()
 {
-	delete tracker;
+	tracker.reset();
 	blog(LOG_INFO, "plugin unloaded");
 }

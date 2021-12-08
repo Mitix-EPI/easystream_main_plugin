@@ -11,8 +11,8 @@
 void es::obs::SourceTracker::handleInputCreated(obs_source_t *source)
 {
 	std::string inputKind = obs_source_get_id(source);
-	obs_data_t *inputSettings = obs_source_get_settings(source);
-	obs_data_t *defaultInputSettings = obs_get_source_defaults(inputKind.c_str());
+	OBSDataAutoRelease inputSettings = obs_source_get_settings(source);
+	OBSDataAutoRelease defaultInputSettings = obs_get_source_defaults(inputKind.c_str());
 
 	if (!filterAudioSources("audio_input", source)) {
 		AutoAudioLeveler AutoAudioLeveler(source);

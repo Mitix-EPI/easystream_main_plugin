@@ -92,7 +92,6 @@ namespace es::obs {
 		    static void handleMediaInputPlaybackEnded(void *param, calldata_t *data);
 
             std::map<std::string, std::shared_ptr<obs_weak_source_t>> _sources;
-		    std::mutex _lock;
             bool _obsLoaded;
     };
 }

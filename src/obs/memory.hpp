@@ -11,6 +11,10 @@
 #include <string>
 #include <obs.hpp>
 
+void ___data_dummy_addref(obs_data_t *data);
+
+using OBSDataAutoRelease = OBSRef<obs_data_t*, ___data_dummy_addref, obs_data_release>;
+
 template <typename T> T* GetCalldataPointer(const calldata_t *data, const char* name) {
 	void *ptr = nullptr;
 	calldata_get_ptr(data, name, &ptr);

@@ -152,7 +152,6 @@ try {
 			break;
 	}
 
-	std::unique_lock<std::mutex> ul(self->_lock);
 	self->_sources.insert({std::string(name), {weak, obs_weak_source_release}});
 } catch (...) {
 	blog(LOG_ERROR,  "Unexpected exception in function '%s'.", __FUNCTION_NAME__);
@@ -192,7 +191,6 @@ try {
 		return;
 	}
 
-	std::unique_lock<std::mutex> ul(self->_lock);
 	auto found = self->_sources.find(std::string(name));
 	if (found == self->_sources.end()) {
 		return;
@@ -235,7 +233,6 @@ try {
 			break;
 	}
 
-	std::unique_lock<std::mutex> ul(self->_lock);
 	auto found = self->_sources.find(std::string(prev_name));
 	if (found == self->_sources.end()) {
 		obs_weak_source_t* weak = obs_source_get_weak_source(target);
@@ -256,7 +253,6 @@ void es::obs::SourceTracker::enumerate(enumerate_cb_t ecb, filter_cb_t fcb)
 {
 	decltype(_sources) _clone;
 	{
-		std::unique_lock<std::mutex> ul(_lock);
 		_clone = _sources;
 	}
 

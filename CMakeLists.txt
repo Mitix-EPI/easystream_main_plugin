@@ -61,6 +61,7 @@ configure_file(
 
 set(PLUGIN_SOURCES
     src/plugin-main.cpp
+    src/obs/memory.cpp
     src/obs/sourceTracker.cpp
     src/obs/events/eventsInputs.cpp
     src/obs/events/eventsScenes.cpp
@@ -73,6 +74,7 @@ if(WIN32)
     set(PLUGIN_SOURCES 
         ${PLUGIN_SOURCES} 
         src/plugin-main.cpp
+        src/obs/memory.cpp
         src/obs/sourceTracker.cpp
         src/obs/events/eventsInputs.cpp
         src/obs/events/eventsScenes.cpp
@@ -83,10 +85,7 @@ if(WIN32)
 endif()
 
 set(PLUGIN_HEADERS
-	src/plugin-macros.generated.h
-    src/obs/sourceTracker.hpp
-    src/obs/obs.hpp
-    src/common.hpp)
+	src/plugin-macros.generated.h)
 
 # --- Platform-independent build settings ---
 add_library(${CMAKE_PROJECT_NAME} MODULE ${PLUGIN_SOURCES} ${PLUGIN_HEADERS})
