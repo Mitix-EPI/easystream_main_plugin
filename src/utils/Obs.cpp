@@ -184,7 +184,7 @@ uint64_t es::utils::obs::numberHelper::GetOutputDuration(obs_output_t *output)
 
 size_t es::utils::obs::numberHelper::GetSceneCount()
 {
-	size_t ret;
+	size_t ret = 0;
 	auto sceneEnumProc = [](void *param, obs_source_t *scene) {
 		auto ret = reinterpret_cast<size_t*>(param);
 

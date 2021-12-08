@@ -14,7 +14,7 @@
 using json = nlohmann::json;
 
 namespace es {
-    namespace Utils {
+    namespace utils {
         namespace Json {
             bool JsonArrayIsValidObsArray(json j);
             obs_data_t *JsonToObsData(json j);

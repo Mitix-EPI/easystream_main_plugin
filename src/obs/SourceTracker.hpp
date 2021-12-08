@@ -8,7 +8,7 @@
 #ifndef SOURCETRACKER_HPP_
 #define SOURCETRACKER_HPP_
 
-#include "../Common.hpp"
+#include "../utils/Utils.hpp"
 
 namespace es::obs {
     class SourceTracker {
