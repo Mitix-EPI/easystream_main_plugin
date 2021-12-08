@@ -8,31 +8,8 @@
 #ifndef OBS_HPP_
 #define OBS_HPP_
 
-#include <util/config-file.h>
-#include <util/util_uint64.h>
-
-#include "../common.hpp"
+#include "../Common.hpp"
 #include "Json.hpp"
-
-enum ObsOutputState {
-	OBS_WEBSOCKET_OUTPUT_STARTING,
-	OBS_WEBSOCKET_OUTPUT_STARTED,
-	OBS_WEBSOCKET_OUTPUT_STOPPING,
-	OBS_WEBSOCKET_OUTPUT_STOPPED,
-	OBS_WEBSOCKET_OUTPUT_RECONNECTING,
-	OBS_WEBSOCKET_OUTPUT_PAUSED,
-	OBS_WEBSOCKET_OUTPUT_RESUMED
-};
-
-enum ObsMediaInputAction {
-	OBS_WEBSOCKET_MEDIA_INPUT_ACTION_NONE,
-	OBS_WEBSOCKET_MEDIA_INPUT_ACTION_PLAY,
-	OBS_WEBSOCKET_MEDIA_INPUT_ACTION_PAUSE,
-	OBS_WEBSOCKET_MEDIA_INPUT_ACTION_STOP,
-	OBS_WEBSOCKET_MEDIA_INPUT_ACTION_RESTART,
-	OBS_WEBSOCKET_MEDIA_INPUT_ACTION_NEXT,
-	OBS_WEBSOCKET_MEDIA_INPUT_ACTION_PREVIOUS
-};
 
 namespace es {
     namespace utils {
@@ -53,7 +30,6 @@ namespace es {
 
             namespace enumHelper {
                 enum obs_bounds_type GetSceneItemBoundsType(std::string boundsType);
-                enum ObsMediaInputAction GetMediaInputAction(std::string mediaAction);
             }
 
             namespace numberHelper {

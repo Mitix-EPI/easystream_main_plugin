@@ -47,9 +47,9 @@
 #define __FUNCTION_NAME__ __func__
 
 // Common Files Includes
-#include "obs/memory.hpp"
+#include "obs/Memory.hpp"
 #include "plugin-macros.generated.h"
+#include "Macros.hpp"
 
-#include "macros.hpp"
 
 #endif /* !COMMON_HPP_ */

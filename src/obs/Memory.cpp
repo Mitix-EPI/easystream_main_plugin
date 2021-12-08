@@ -5,7 +5,7 @@
 ** obs
 */
 
-#include "memory.hpp"
+#include "Memory.hpp"
 
 void ___source_dummy_addref(obs_source_t*) {}
 void ___weak_source_dummy_addref(obs_weak_source_t*) {}

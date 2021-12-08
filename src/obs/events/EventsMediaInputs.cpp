@@ -5,7 +5,7 @@
 ** eventsMediaInputs
 */
 
-#include "../sourceTracker.hpp"
+#include "../SourceTracker.hpp"
 
 void es::obs::SourceTracker::sourceMediaPauseMultiHandler(void *param, calldata_t *data)
 {

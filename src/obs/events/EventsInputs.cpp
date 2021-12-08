@@ -5,8 +5,8 @@
 ** eventInputs
 */
 
-#include "../sourceTracker.hpp"
-#include "../autoAudioLeveler/autoAudioLeveler.hpp"
+#include "../SourceTracker.hpp"
+#include "../autoAudioLeveler/AutoAudioLeveler.hpp"
 
 void es::obs::SourceTracker::handleInputCreated(obs_source_t *source)
 {

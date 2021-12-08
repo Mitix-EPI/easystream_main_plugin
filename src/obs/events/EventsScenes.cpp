@@ -5,7 +5,7 @@
 ** eventScenes
 */
 
-#include "../sourceTracker.hpp"
+#include "../SourceTracker.hpp"
 
 void es::obs::SourceTracker::handleSceneCreated(obs_source_t *source)
 {

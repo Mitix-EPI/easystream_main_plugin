@@ -8,7 +8,7 @@
 #ifndef AUTOAUDIOLEVEL_HPP_
 #define AUTOAUDIOLEVEL_HPP_
 
-#include "../../common.hpp"
+#include "../../Common.hpp"
 
 namespace es::obs
 {

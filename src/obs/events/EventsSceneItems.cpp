@@ -5,7 +5,7 @@
 ** eventsSceneItems
 */
 
-#include "../sourceTracker.hpp"
+#include "../SourceTracker.hpp"
 
 void es::obs::SourceTracker::handleSceneItemCreated(void *param, calldata_t *data)
 {

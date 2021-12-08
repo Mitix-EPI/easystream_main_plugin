@@ -5,7 +5,7 @@
 ** autoAudioLeveler
 */
 
-#include "autoAudioLeveler.hpp"
+#include "AutoAudioLeveler.hpp"
 
 es::obs::AutoAudioLeveler::AutoAudioLeveler(obs_source_t *source) : _source(source)
 {

@@ -59,10 +59,12 @@ std::string es::utils::obs::stringHelper::GetCurrentProfile()
 
 std::string es::utils::obs::stringHelper::GetCurrentProfilePath()
 {
-	char *profilePath = obs_frontend_get_current_profile_path();
-	std::string ret = profilePath;
-	bfree(profilePath);
-	return ret;
+	//char *profilePath = obs_frontend_get_current_profile_path();
+	//std::string ret = profilePath;
+	//bfree(profilePath);
+	//return ret;
+
+	return "";
 }
 
 std::string es::utils::obs::stringHelper::GetCurrentRecordOutputPath()
@@ -166,18 +168,6 @@ enum obs_bounds_type es::utils::obs::enumHelper::GetSceneItemBoundsType(std::str
 	RET_COMPARE(boundsType, OBS_BOUNDS_MAX_ONLY);
 
 	return OBS_BOUNDS_NONE;
-}
-
-enum ObsMediaInputAction es::utils::obs::enumHelper::GetMediaInputAction(std::string mediaAction)
-{
-	RET_COMPARE(mediaAction, OBS_WEBSOCKET_MEDIA_INPUT_ACTION_PLAY);
-	RET_COMPARE(mediaAction, OBS_WEBSOCKET_MEDIA_INPUT_ACTION_PAUSE);
-	RET_COMPARE(mediaAction, OBS_WEBSOCKET_MEDIA_INPUT_ACTION_STOP);
-	RET_COMPARE(mediaAction, OBS_WEBSOCKET_MEDIA_INPUT_ACTION_RESTART);
-	RET_COMPARE(mediaAction, OBS_WEBSOCKET_MEDIA_INPUT_ACTION_NEXT);
-	RET_COMPARE(mediaAction, OBS_WEBSOCKET_MEDIA_INPUT_ACTION_PREVIOUS);
-
-	return OBS_WEBSOCKET_MEDIA_INPUT_ACTION_NONE;
 }
 
 uint64_t es::utils::obs::numberHelper::GetOutputDuration(obs_output_t *output)

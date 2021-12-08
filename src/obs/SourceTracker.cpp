@@ -5,7 +5,7 @@
 ** sourceTracker
 */
 
-#include "sourceTracker.hpp"
+#include "SourceTracker.hpp"
 
 void es::obs::SourceTracker::init()
 {

@@ -8,7 +8,7 @@
 #ifndef UTILS_HPP_
 #define UTILS_HPP_
 
-#include "../common.hpp"
+#include "../Common.hpp"
 
 // All utils files includes
 #include "Json.hpp"

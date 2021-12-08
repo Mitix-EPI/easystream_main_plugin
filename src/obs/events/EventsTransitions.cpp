@@ -5,7 +5,7 @@
 ** eventsTransitions
 */
 
-#include "../sourceTracker.hpp"
+#include "../SourceTracker.hpp"
 
 void es::obs::SourceTracker::handleTransitionCreated(obs_source_t *source)
 {
