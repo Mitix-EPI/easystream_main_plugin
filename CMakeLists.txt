@@ -59,30 +59,7 @@ configure_file(
     ../ci/ci_includes.generated.cmd
 )
 
-set(PLUGIN_SOURCES
-    src/plugin-main.cpp
-    src/obs/memory.cpp
-    src/obs/sourceTracker.cpp
-    src/obs/events/eventsInputs.cpp
-    src/obs/events/eventsScenes.cpp
-    src/obs/events/eventsMediaInputs.cpp
-    src/obs/events/eventsSceneItems.cpp
-    src/obs/events/eventsTransitions.cpp
-    src/obs/autoAudioLeveler/autoAudioLeveler.cpp)
-
-if(WIN32)
-    set(PLUGIN_SOURCES 
-        ${PLUGIN_SOURCES} 
-        src/plugin-main.cpp
-        src/obs/memory.cpp
-        src/obs/sourceTracker.cpp
-        src/obs/events/eventsInputs.cpp
-        src/obs/events/eventsScenes.cpp
-        src/obs/events/eventsMediaInputs.cpp
-        src/obs/events/eventsSceneItems.cpp
-        src/obs/events/eventsTransitions.cpp
-        src/obs/autoAudioLeveler/autoAudioLeveler.cpp)
-endif()
+file(GLOB_RECURSE PLUGIN_SOURCES src/*.cpp)
 
 set(PLUGIN_HEADERS
 	src/plugin-macros.generated.h)
