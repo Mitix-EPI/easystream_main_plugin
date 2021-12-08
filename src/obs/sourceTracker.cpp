@@ -116,9 +116,9 @@ void es::obs::SourceTracker::createHandler(void* ptr, calldata_t* data)
 try {
 	es::obs::SourceTracker *self = static_cast<es::obs::SourceTracker*>(ptr);
 
-    if (!self->_obsLoaded) {
-        return;
-    }
+    // if (!self->_obsLoaded) {
+    //     return;
+    // }
 	obs_source_t *target = GetCalldataPointer<obs_source_t>(data, "source");
 
 	if (!target || !self) {
@@ -358,6 +358,8 @@ void es::obs::SourceTracker::disconnectSourceSignals(obs_source_t *source)
 	signal_handler_disconnect(sh, "item_locked", handleSceneItemLockStateChanged, this);
 	signal_handler_disconnect(sh, "item_transform", handleSceneItemTransformChanged, this);
 }
+
+// Filters remove all source of the given type
 
 bool es::obs::SourceTracker::filterSources(std::string, obs_source_t* source)
 {

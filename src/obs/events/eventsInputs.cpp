@@ -6,6 +6,7 @@
 */
 
 #include "../sourceTracker.hpp"
+#include "../autoAudioLeveler/autoAudioLeveler.hpp"
 
 void es::obs::SourceTracker::handleInputCreated(obs_source_t *source)
 {
@@ -13,6 +14,10 @@ void es::obs::SourceTracker::handleInputCreated(obs_source_t *source)
 	obs_data_t *inputSettings = obs_source_get_settings(source);
 	obs_data_t *defaultInputSettings = obs_get_source_defaults(inputKind.c_str());
 
+	if (!filterAudioSources("audio_input", source)) {
+		AutoAudioLeveler AutoAudioLeveler(source);
+		blog(LOG_INFO, "Instancing Audio Leveler for %s", obs_source_get_name(source));
+	}
     blog(LOG_INFO, "handleInputCreated: %s, parent: %s", inputKind.c_str(), obs_source_get_name(source));
 }
 

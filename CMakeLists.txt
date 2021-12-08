@@ -66,7 +66,8 @@ set(PLUGIN_SOURCES
     src/obs/events/eventsScenes.cpp
     src/obs/events/eventsMediaInputs.cpp
     src/obs/events/eventsSceneItems.cpp
-    src/obs/events/eventsTransitions.cpp)
+    src/obs/events/eventsTransitions.cpp
+    src/obs/autoAudioLeveler/autoAudioLeveler.cpp)
 
 if(WIN32)
     set(PLUGIN_SOURCES 
@@ -77,7 +78,8 @@ if(WIN32)
         src/obs/events/eventsScenes.cpp
         src/obs/events/eventsMediaInputs.cpp
         src/obs/events/eventsSceneItems.cpp
-        src/obs/events/eventsTransitions.cpp)
+        src/obs/events/eventsTransitions.cpp
+        src/obs/autoAudioLeveler/autoAudioLeveler.cpp)
 endif()
 
 set(PLUGIN_HEADERS

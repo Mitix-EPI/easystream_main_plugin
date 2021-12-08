@@ -47,4 +47,6 @@
 #include "obs/obs.hpp"
 #include "plugin-macros.generated.h"
 
+#include "macros.hpp"
+
 #endif /* !COMMON_HPP_ */
