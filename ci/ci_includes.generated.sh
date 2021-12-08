@@ -1,4 +1,4 @@
-PLUGIN_NAME="obs-easyStream"
+PLUGIN_NAME="obs-easystream-main-plugin"
 PLUGIN_VERSION="1.0.0"
-MACOS_BUNDLEID="com.example.obs-easyStream"
-LINUX_MAINTAINER_EMAIL="jul.minguet@epitech.eu"
+MACOS_BUNDLEID="io.easystream.obs-easystream-main-plugin"
+LINUX_MAINTAINER_EMAIL="contact@easystream.io"

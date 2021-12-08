@@ -60,21 +60,34 @@ configure_file(
 )
 
 set(PLUGIN_SOURCES
-	src/plugin-main.cpp)
+    src/plugin-main.cpp
+    src/obs/sourceTracker.cpp
+    src/obs/events/eventsInputs.cpp
+    src/obs/events/eventsScenes.cpp
+    src/obs/events/eventsMediaInputs.cpp
+    src/obs/events/eventsSceneItems.cpp
+    src/obs/events/eventsTransitions.cpp)
 
 if(WIN32)
     set(PLUGIN_SOURCES 
         ${PLUGIN_SOURCES} 
-        src/plugin-main.cpp)
+        src/plugin-main.cpp
+        src/obs/sourceTracker.cpp
+        src/obs/events/eventsInputs.cpp
+        src/obs/events/eventsScenes.cpp
+        src/obs/events/eventsMediaInputs.cpp
+        src/obs/events/eventsSceneItems.cpp
+        src/obs/events/eventsTransitions.cpp)
 endif()
 
 set(PLUGIN_HEADERS
-	src/plugin-macros.generated.h)
-
-qt5_wrap_ui(PLUGIN_UI_HEADERS src/plugin-main.ui)
+	src/plugin-macros.generated.h
+    src/obs/sourceTracker.hpp
+    src/obs/obs.hpp
+    src/common.hpp)
 
 # --- Platform-independent build settings ---
-add_library(${CMAKE_PROJECT_NAME} MODULE ${PLUGIN_SOURCES} ${PLUGIN_HEADERS} ${PLUGIN_UI_HEADERS})
+add_library(${CMAKE_PROJECT_NAME} MODULE ${PLUGIN_SOURCES} ${PLUGIN_HEADERS})
 
 include_directories(
 	"${LIBOBS_INCLUDE_DIR}/../UI/obs-frontend-api"

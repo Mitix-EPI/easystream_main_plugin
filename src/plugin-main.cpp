@@ -17,19 +17,30 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 */
 
 #include <obs-module.h>
+#include <iostream>
+#include <string>
+#include <vector>
 
 #include "plugin-macros.generated.h"
+#include "obs/sourceTracker.hpp"
 
 OBS_DECLARE_MODULE()
 OBS_MODULE_USE_DEFAULT_LOCALE(PLUGIN_NAME, "en-US")
 
+es::obs::SourceTracker *tracker = new es::obs::SourceTracker();
+
 bool obs_module_load(void)
 {
-    blog(LOG_INFO, "plugin loaded successfully (version %s)", PLUGIN_VERSION);
-    return true;
+	blog(LOG_INFO, "plugin loaded successfully (version %s)", PLUGIN_VERSION);
+
+	blog(LOG_INFO, "-----------------------------------------");
+	tracker->init();
+	blog(LOG_INFO, "-----------------------------------------");
+	return true;
 }
 
 void obs_module_unload()
 {
-    blog(LOG_INFO, "plugin unloaded");
+	delete tracker;
+	blog(LOG_INFO, "plugin unloaded");
 }

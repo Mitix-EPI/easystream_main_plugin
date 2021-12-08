@@ -1,6 +1,6 @@
-#define MyAppName "obs-easyStream"
+#define MyAppName "obs-easystream-main-plugin"
 #define MyAppVersion "1.0.0"
-#define MyAppPublisher "Hrothgor"
+#define MyAppPublisher "EasyStream"
 #define MyAppURL "https://github.com/jbwong05/obs-text-slideshow"
 
 [Setup]
