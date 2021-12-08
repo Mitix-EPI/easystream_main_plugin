@@ -97,7 +97,7 @@ void es::Server::acceptClient()
 
 void es::Server::sendMessage(int sock, const std::string &msg)
 {
-    if (send(sock, msg.c_str(), msg.length(), 0)) {
+    if (send(sock, msg.c_str(), msg.length(), 0) == -1) {
         perror("Send: ");
         throw es::Error("Send failed", "Server.cpp, line 67");
     }

@@ -47,3 +47,7 @@ cmake_uninstall.cmake
 ci/obs-studio
 
 .DS_Store
+node_modules
+Client
+yarn.lock
+package.json
