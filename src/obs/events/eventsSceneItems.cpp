@@ -21,6 +21,7 @@ void es::obs::SourceTracker::handleSceneItemCreated(void *param, calldata_t *dat
 	std::string inputName(obs_source_get_name(obs_sceneitem_get_source(sceneItem)));
 	int64_t sceneItemId = obs_sceneitem_get_id(sceneItem);
 	int sceneItemIndex = obs_sceneitem_get_order_position(sceneItem);
+	blog(LOG_INFO, "[SourceTracker::handleSceneItemCreated]: %s", sceneName.c_str());
 }
 
 void es::obs::SourceTracker::handleSceneItemRemoved(void *param, calldata_t *data)
@@ -37,6 +38,7 @@ void es::obs::SourceTracker::handleSceneItemRemoved(void *param, calldata_t *dat
 	std::string inputName(obs_source_get_name(obs_sceneitem_get_source(sceneItem)));
 	int64_t sceneItemId = obs_sceneitem_get_id(sceneItem);
 	int sceneItemIndex = obs_sceneitem_get_order_position(sceneItem);
+	blog(LOG_INFO, "[SourceTracker::handleSceneItemRemoved]: %s", sceneName.c_str());
 }
 
 void es::obs::SourceTracker::handleSceneItemListReindexed(void *param, calldata_t *data)
@@ -46,7 +48,7 @@ void es::obs::SourceTracker::handleSceneItemListReindexed(void *param, calldata_
 		return;
 
 	std::string name(obs_source_get_name(obs_scene_get_source(scene)));
-    blog(LOG_INFO, "Scene item list reindexed: %s", name.c_str());
+    blog(LOG_INFO, "[SourceTracker::handleSceneItemListReindexed]: %s", name.c_str());
 }
 
 void es::obs::SourceTracker::handleSceneItemEnableStateChanged(void *param, calldata_t *data)
@@ -63,7 +65,7 @@ void es::obs::SourceTracker::handleSceneItemEnableStateChanged(void *param, call
 
 	std::string name(obs_source_get_name(obs_scene_get_source(scene)));
 	int64_t sceneItemId = obs_sceneitem_get_id(sceneItem);
-    blog(LOG_INFO, "NAME: %s", name.c_str());
+    blog(LOG_INFO, "[SourceTracker::handleSceneItemEnableStateChanged]: %s", name.c_str());
 }
 
 void es::obs::SourceTracker::handleSceneItemLockStateChanged(void *param, calldata_t *data)
@@ -80,7 +82,7 @@ void es::obs::SourceTracker::handleSceneItemLockStateChanged(void *param, callda
 
 	std::string name(obs_source_get_name(obs_scene_get_source(scene)));
 	int64_t sceneItemId = obs_sceneitem_get_id(sceneItem);
-    blog(LOG_INFO, "NAME: %s", name.c_str());
+    blog(LOG_INFO, "[SourceTracker::handleSceneItemLockStateChanged]: %s", name.c_str());
 }
 
 void es::obs::SourceTracker::handleSceneItemTransformChanged(void *param, calldata_t *data)
@@ -95,5 +97,5 @@ void es::obs::SourceTracker::handleSceneItemTransformChanged(void *param, callda
 
 	std::string name(obs_source_get_name(obs_scene_get_source(scene)));
 	int64_t sceneItemId = obs_sceneitem_get_id(sceneItem);
-    blog(LOG_INFO, "NAME: %s", name.c_str());
+    blog(LOG_INFO, "[SourceTracker::handleMediaInputPlaybackEnded]: %s", name.c_str());
 }

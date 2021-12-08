@@ -12,7 +12,7 @@ void es::obs::SourceTracker::handleSceneCreated(obs_source_t *source)
 	std::string name(obs_source_get_name(source));
 	bool group = obs_source_is_group(source);
 
-    blog(LOG_INFO, "Scene created: %s", name.c_str());
+    blog(LOG_INFO, "[SourceTracker::handleSceneCreated]: %s", name.c_str());
 }
 
 void es::obs::SourceTracker::handleSceneRemoved(obs_source_t *source)
@@ -20,12 +20,12 @@ void es::obs::SourceTracker::handleSceneRemoved(obs_source_t *source)
 	std::string name(obs_source_get_name(source));
 	bool group = obs_source_is_group(source);
 
-    blog(LOG_INFO, "Scene removed: %s", name.c_str());
+    blog(LOG_INFO, "[SourceTracker::handleSceneRemoved]: %s", name.c_str());
 }
 
 void es::obs::SourceTracker::handleSceneNameChanged(obs_source_t *, std::string oldSceneName, std::string sceneName)
 {
-    blog(LOG_INFO, "Scene name changed: %s", sceneName.c_str());
+    blog(LOG_INFO, "[SourceTracker::handleSceneNameChanged]: %s", sceneName.c_str());
 }
 
 void es::obs::SourceTracker::handleCurrentSceneChanged()
@@ -34,7 +34,7 @@ void es::obs::SourceTracker::handleCurrentSceneChanged()
 
 	std::string name(obs_source_get_name(currentScene));
 
-    blog(LOG_INFO, "Current scene changed: %s", name.c_str());
+    blog(LOG_INFO, "[SourceTracker::handleCurrentSceneChanged]: %s", name.c_str());
 }
 
 void es::obs::SourceTracker::handleCurrentPreviewSceneChanged()
@@ -46,10 +46,10 @@ void es::obs::SourceTracker::handleCurrentPreviewSceneChanged()
 
 	std::string name(obs_source_get_name(currentPreviewScene));
 
-    blog(LOG_INFO, "Current preview scene changed: %s", name.c_str());
+    blog(LOG_INFO, "[SourceTracker::handleCurrentPreviewSceneChanged]: %s", name.c_str());
 }
 
 void es::obs::SourceTracker::handleSceneListChanged()
 {
-    blog(LOG_INFO, "Scene list changed");
+    blog(LOG_INFO, "[SourceTracker::handleSceneListChanged]:");
 }
