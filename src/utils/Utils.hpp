@@ -13,5 +13,6 @@
 // All utils files includes
 #include "Json.hpp"
 #include "Obs.hpp"
+#include "Thread.hpp"
 
 #endif /* !UTILS_HPP_ */

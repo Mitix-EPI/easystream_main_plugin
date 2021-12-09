@@ -5,14 +5,14 @@
 ** utils
 */
 
-#ifndef UTILS_HPP_
-#define UTILS_HPP_
+#ifndef MAIN_HPP_
+#define MAIN_HPP_
 
 #include "Common.hpp"
 
 #include "obs/SourceTracker.hpp"
-
+#include "utils/Thread.hpp"
 
 os_cpu_usage_info_t* GetCpuUsageInfo();
 
-#endif /* !UTILS_HPP_ */
+#endif /* !MAIN_HPP_ */

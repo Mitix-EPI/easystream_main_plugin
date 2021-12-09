@@ -21,8 +21,16 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 OBS_DECLARE_MODULE()
 OBS_MODULE_USE_DEFAULT_LOCALE(PLUGIN_NAME, "en-US")
 
-std::shared_ptr<es::obs::SourceTracker> tracker = std::make_shared<es::obs::SourceTracker>(es::obs::SourceTracker());
-os_cpu_usage_info_t* _cpuUsageInfo;
+std::shared_ptr<es::obs::SourceTracker> tracker = std::make_shared<es::obs::SourceTracker>();
+std::shared_ptr<es::thread::ThreadPool> threadPool = std::make_shared<es::thread::ThreadPool>(10);
+os_cpu_usage_info_t *cpuUsageInfo;
+
+void test(std::shared_ptr<void>)
+{
+	blog(LOG_INFO, "[Thread::ThreadPool]: Thread start");
+	std::this_thread::sleep_for(std::chrono::seconds(5));
+	blog(LOG_INFO, "[Thread::ThreadPool]: Thread finish");
+}
 
 bool obs_module_load(void)
 {
@@ -30,7 +38,8 @@ bool obs_module_load(void)
 
 	blog(LOG_INFO, "-----------------------------------------");
 	tracker->init();
-	_cpuUsageInfo = os_cpu_usage_info_start();
+	threadPool->push(std::function(test), nullptr);
+	cpuUsageInfo = os_cpu_usage_info_start();
 	blog(LOG_INFO, "-----------------------------------------");
 	return true;
 }
@@ -38,12 +47,13 @@ bool obs_module_load(void)
 void obs_module_unload()
 {
 	tracker.reset();
-	os_cpu_usage_info_destroy(_cpuUsageInfo);
+	threadPool.reset();
+	os_cpu_usage_info_destroy(cpuUsageInfo);
 
 	blog(LOG_INFO, "plugin unloaded");
 }
 
 os_cpu_usage_info_t* GetCpuUsageInfo()
 {
-	return _cpuUsageInfo;
+	return cpuUsageInfo;
 }
