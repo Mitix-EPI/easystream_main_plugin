@@ -16,18 +16,13 @@ You should have received a copy of the GNU General Public License along
 with this program. If not, see <https://www.gnu.org/licenses/>
 */
 
-#include <obs-module.h>
-#include <iostream>
-#include <string>
-#include <vector>
-
-#include "plugin-macros.generated.h"
-#include "obs/SourceTracker.hpp"
+#include "plugin-main.hpp"
 
 OBS_DECLARE_MODULE()
 OBS_MODULE_USE_DEFAULT_LOCALE(PLUGIN_NAME, "en-US")
 
 std::shared_ptr<es::obs::SourceTracker> tracker = std::make_shared<es::obs::SourceTracker>(es::obs::SourceTracker());
+os_cpu_usage_info_t* _cpuUsageInfo;
 
 bool obs_module_load(void)
 {
@@ -35,6 +30,7 @@ bool obs_module_load(void)
 
 	blog(LOG_INFO, "-----------------------------------------");
 	tracker->init();
+	_cpuUsageInfo = os_cpu_usage_info_start();
 	blog(LOG_INFO, "-----------------------------------------");
 	return true;
 }
@@ -42,5 +38,12 @@ bool obs_module_load(void)
 void obs_module_unload()
 {
 	tracker.reset();
+	os_cpu_usage_info_destroy(_cpuUsageInfo);
+
 	blog(LOG_INFO, "plugin unloaded");
+}
+
+os_cpu_usage_info_t* GetCpuUsageInfo()
+{
+	return _cpuUsageInfo;
 }

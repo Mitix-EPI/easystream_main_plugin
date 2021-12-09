@@ -384,8 +384,7 @@ json es::utils::obs::dataHelper::GetStats()
 
 	video_t* video = obs_get_video();
 
-	// ret["cpuUsage"] = os_cpu_usage_info_query(GetCpuUsageInfo());
-	ret["cpuUsage"] = os_cpu_usage_info_query(nullptr); // if you want to use this ask Hrotghor it's annoying
+	ret["cpuUsage"] = os_cpu_usage_info_query(GetCpuUsageInfo());
 	ret["memoryUsage"] = (double)os_get_proc_resident_size() / (1024.0 * 1024.0);
 	ret["availableDiskSpace"] = (double)os_get_free_disk_space(recordPath) / (1024.0 * 1024.0);
 	ret["activeFps"] = obs_get_active_fps();

@@ -8,8 +8,8 @@
 #ifndef OBS_HPP_
 #define OBS_HPP_
 
-#include "../Common.hpp"
 #include "Json.hpp"
+#include "../plugin-main.hpp"
 
 namespace es {
     namespace utils {
