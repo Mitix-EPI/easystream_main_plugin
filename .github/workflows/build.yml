@@ -1,0 +1,30 @@
+name: CI Multiplatform Build
+
+on:
+  push:
+    branches: [ main, ci ]
+  pull_request:
+    branches: [ main, ci ]
+
+jobs:  
+  ubuntuBuild:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install deps
+        run: | 
+          apt-get update && apt-get install -y \
+          autoconf
+          automake \
+          autopoint \
+          build-essential \
+          g++-multilib \
+          gcc-multilib \
+          git \
+          wget \
+          sudo software-properties-common
+      - name: OBS deps
+        run: ./ci/linux/install-dependencies-ubuntu.sh
+      - name: Compile
+        run: ./ci/linux/build-ubuntu.sh
+  
