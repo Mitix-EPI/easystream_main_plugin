@@ -321,7 +321,34 @@ struct EnumInputInfo {
 	std::vector<json> inputs;
 };
 
-std::vector<json> es::utils::obs::listHelper::GetInputList(std::string inputKind)
+std::vector<json> es::utils::obs::listHelper::GetInputList()
+{
+	std::vector<json> inputInfo;
+
+	auto inputEnumProc = [](void *param, obs_source_t *input) {
+		// Sanity check in case the API changes
+		if (obs_source_get_type(input) != OBS_SOURCE_TYPE_INPUT)
+			return true;
+
+		auto inputInfo = reinterpret_cast<std::vector<json> *>(param);
+
+		std::string inputKind = obs_source_get_id(input);
+
+		json inputJson;
+		inputJson["inputName"] = obs_source_get_name(input);
+		inputJson["inputKind"] = inputKind;
+		inputJson["unversionedInputKind"] = obs_source_get_unversioned_id(input);
+
+		inputInfo->push_back(inputJson);
+		return true;
+	};
+	// Actually enumerates only public inputs, despite the name
+	obs_enum_sources(inputEnumProc, &inputInfo);
+
+	return inputInfo;
+}
+
+std::vector<json> es::utils::obs::listHelper::GetInputByKindList(std::string inputKind)
 {
 	EnumInputInfo inputInfo;
 	inputInfo.inputKind = inputKind;
@@ -372,6 +399,36 @@ std::vector<std::string> es::utils::obs::listHelper::GetInputKindList(bool unver
 	}
 
 	return ret;
+}
+
+std::vector<json> es::utils::obs::listHelper::GetMicsList()
+{
+	std::vector<json> inputInfo;
+
+	auto inputEnumProc = [](void *param, obs_source_t *input) {
+		// Sanity check in case the API changes
+		if (obs_source_get_type(input) != OBS_SOURCE_TYPE_INPUT)
+			return true;
+
+		auto inputInfo = reinterpret_cast<std::vector<json> *>(param);
+
+		std::string inputKind = obs_source_get_id(input);
+
+		if (es::obs::SourceTracker::filterAudioSources("", input))
+			return true;
+
+		json inputJson;
+		inputJson["micName"] = obs_source_get_name(input);
+		inputJson["micKind"] = inputKind;
+		inputJson["unversionedmicKind"] = obs_source_get_unversioned_id(input);
+
+		inputInfo->push_back(inputJson);
+		return true;
+	};
+	// Actually enumerates only public inputs, despite the name
+	obs_enum_sources(inputEnumProc, &inputInfo);
+
+	return inputInfo;
 }
 
 json es::utils::obs::dataHelper::GetStats()

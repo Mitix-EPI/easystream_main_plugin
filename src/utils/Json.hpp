@@ -19,8 +19,6 @@ namespace es {
             bool JsonArrayIsValidObsArray(json j);
             obs_data_t *JsonToObsData(json j);
             json ObsDataToJson(obs_data_t *d, bool includeDefault = false);
-            bool GetJsonFileContent(std::string fileName, json &content);
-            bool SetJsonFileContent(std::string fileName, json content, bool createNew = true);
         }
     }
 }
