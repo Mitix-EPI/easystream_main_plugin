@@ -35,6 +35,7 @@
 #include <vector>
 #include <functional>
 #include <atomic>
+#include <numeric>
 #include <condition_variable>
 #include <list>
 #include <thread>

@@ -14,10 +14,10 @@ void es::obs::SourceTracker::handleInputCreated(obs_source_t *source)
 	OBSDataAutoRelease inputSettings = obs_source_get_settings(source);
 	OBSDataAutoRelease defaultInputSettings = obs_get_source_defaults(inputKind.c_str());
 
-	// if (!filterAudioSources("audio_input", source)) {
-	// 	AutoAudioLeveler AutoAudioLeveler(source);
-	// 	blog(LOG_INFO, "Instancing Audio Leveler for %s", obs_source_get_name(source));
-	// }
+	if (!filterAudioSources("audio_input", source)) {
+		AutoAudioLeveler AutoAudioLeveler(source);
+		blog(LOG_INFO, "Instancing Audio Leveler for %s", obs_source_get_name(source));
+	}
     blog(LOG_INFO, "[SourceTracker::handleInputCreated]: %s, parent: %s", inputKind.c_str(), obs_source_get_name(source));
 }
 
@@ -102,7 +102,7 @@ void es::obs::SourceTracker::handleInputVolumeChanged(void *param, calldata_t *d
 		inputVolumeDb = -100;
 
 	std::string name(obs_source_get_name(source));
-    blog(LOG_INFO, "[SourceTracker::handleInputVolumeChanged]: %s ", name.c_str());
+    // blog(LOG_INFO, "[SourceTracker::handleInputVolumeChanged]: %s ", name.c_str());
 }
 
 void es::obs::SourceTracker::handleInputAudioSyncOffsetChanged(void *param, calldata_t *data)
