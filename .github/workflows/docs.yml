@@ -1,0 +1,17 @@
+name: Generate Documentation
+
+on:
+  push:
+    branches: [feature-github-ci]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - uses: ammaraskar/sphinx-action@master
+        with:
+          docs-folder: "docs/"

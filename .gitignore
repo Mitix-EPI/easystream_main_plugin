@@ -48,6 +48,9 @@ ci/obs-studio
 
 .DS_Store
 
+#docs
+!docs/Makefile
+
 ### VisualStudioCode ###
 .vscode/*
 *.code-workspace
