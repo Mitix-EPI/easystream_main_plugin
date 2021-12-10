@@ -14,10 +14,6 @@ jobs:
       - name: Install deps
         run: | 
           sudo apt-get update && sudo apt-get install -y \
-            autoconf
-            automake \
-            autopoint \
-            build-essential \
             g++-multilib \
             gcc-multilib \
             git \
