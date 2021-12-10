@@ -1,8 +1,0 @@
-version: "3.8"
-services:
-  linux:
-    build:
-      context: .
-      dockerfile: ./docker/linux/Dockerfile
-    volumes:
-      - ./plugin:/usr/src/app/ubuntuApp

@@ -4,7 +4,18 @@ on:
   pull_request:
     branches: [ main ]
 
-jobs:  
+jobs:
+  #macosBuild:
+  #  runs-on: macos-latest
+
+  #  steps:
+  #    - name: Checkout
+  #      uses: actions/checkout@v2
+  #    - name: Install deps
+  #      run: ./ci/macos/install-dependencies-macos.sh
+  #    - name: Compile
+  #      run: ./ci/macos/build-macos.sh
+
   ubuntuBuild:
     runs-on: ubuntu-latest
     steps:
@@ -17,7 +28,6 @@ jobs:
             git \
             wget \
       - name: OBS deps
-        run: ./plugin/ci/linux/install-dependencies-ubuntu.sh
+        run: ./ci/linux/install-dependencies-ubuntu.sh
       - name: Compile
-        run: ./plugin/ci/linux/build-ubuntu.sh
-  
+        run: ./ci/linux/build-ubuntu.sh
