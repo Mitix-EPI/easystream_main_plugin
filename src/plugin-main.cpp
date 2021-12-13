@@ -17,6 +17,7 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 */
 
 #include "plugin-main.hpp"
+#include <Python.h>
 
 OBS_DECLARE_MODULE()
 OBS_MODULE_USE_DEFAULT_LOCALE(PLUGIN_NAME, "en-US")
@@ -28,7 +29,7 @@ os_cpu_usage_info_t *cpuUsageInfo;
 void test(std::shared_ptr<void>)
 {
 	blog(LOG_INFO, "[Thread::ThreadPool]: Thread start");
-	std::this_thread::sleep_for(std::chrono::seconds(5));
+	std::this_thread::sleep_for(std::chrono::seconds(2));
 	blog(LOG_INFO, "[Thread::ThreadPool]: Thread finish");
 }
 

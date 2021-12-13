@@ -31,6 +31,7 @@ if (WIN32 OR APPLE)
 endif()
 
 find_package(LibObs REQUIRED)
+find_package(PythonLibs REQUIRED)
 find_package(Qt5 REQUIRED COMPONENTS Core Widgets)
 
 if(NOT CMAKE_BUILD_TYPE)
@@ -71,13 +72,15 @@ include_directories(
 	"${LIBOBS_INCLUDE_DIR}/../UI/obs-frontend-api"
 	${Qt5Core_INCLUDES}
 	${Qt5Widgets_INCLUDES}
+    ${PYTHON_INCLUDE_DIRS}
 )
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
 	libobs
 	Qt5::Core
 	Qt5::Widgets
-)
+    ${PYTHON_LIBRARIES}
+)   
 
 # --- End of section ---
 
