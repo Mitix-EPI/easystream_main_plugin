@@ -32,6 +32,7 @@ endif()
 
 find_package(LibObs REQUIRED)
 find_package(Qt5 REQUIRED COMPONENTS Core Widgets)
+find_package(Boost COMPONENTS thread date_time program_options filesystem system REQUIRED)
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
@@ -77,6 +78,8 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
 	libobs
 	Qt5::Core
 	Qt5::Widgets
+    Boost::system
+    Boost::thread
 )
 
 # --- End of section ---

@@ -1,0 +1,10 @@
+# pack-refs with: peeled fully-peeled sorted 
+2e16c5c370b38342c53f34d946dde0f5c93c82d0 refs/remotes/origin/ci
+5aba681dc64b776f6aea1918a0fbef47f5729f4c refs/remotes/origin/feature-IA-speech-to-text
+9a35583d034e2316da4aee316f3ba2a43a90ddc7 refs/remotes/origin/feature-get-audio-settings
+a56150c67480c10afc8bc955308bcb28e259e259 refs/remotes/origin/feature-github-ci
+9a35583d034e2316da4aee316f3ba2a43a90ddc7 refs/remotes/origin/feature-listen-mic
+fafb2345da8e7398e3329a4956b15e64fdd3574b refs/remotes/origin/jsonTest
+44a474bc2cdabfc2b66654f0636f2cac6c0f61db refs/remotes/origin/main
+d4ed07a7ca11477e45b6205addbb4b87748dc2b4 refs/remotes/origin/stable
+226e33b2d0ad74cd95a835137807a56d79d21510 refs/tags/1.0

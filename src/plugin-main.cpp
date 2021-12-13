@@ -17,6 +17,7 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 */
 
 #include "plugin-main.hpp"
+#include "src/Server/include/AsioTcpServer.hpp"
 
 OBS_DECLARE_MODULE()
 OBS_MODULE_USE_DEFAULT_LOCALE(PLUGIN_NAME, "en-US")
@@ -25,10 +26,19 @@ std::shared_ptr<es::obs::SourceTracker> tracker = std::make_shared<es::obs::Sour
 std::shared_ptr<es::thread::ThreadPool> threadPool = std::make_shared<es::thread::ThreadPool>(10);
 os_cpu_usage_info_t *cpuUsageInfo;
 
+void startServer(std::shared_ptr<void>)
+{
+	es::server::AsioTcpServer server("0.0.0.0", 47920);
+
+	blog(LOG_INFO, "[EASYSTREAM STARTED TCP SERVER]");
+	server.start();
+	while (1);
+}
+
 void test(std::shared_ptr<void>)
 {
 	blog(LOG_INFO, "[Thread::ThreadPool]: Thread start");
-	std::this_thread::sleep_for(std::chrono::seconds(5));
+	std::this_thread::sleep_for(std::chrono::seconds(2));
 	blog(LOG_INFO, "[Thread::ThreadPool]: Thread finish");
 }
 
@@ -39,6 +49,7 @@ bool obs_module_load(void)
 	blog(LOG_INFO, "-----------------------------------------");
 	tracker->init();
 	threadPool->push(std::function(test), nullptr);
+	threadPool->push(std::function(startServer), nullptr);
 	cpuUsageInfo = os_cpu_usage_info_start();
 	blog(LOG_INFO, "-----------------------------------------");
 	return true;
