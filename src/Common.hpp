@@ -19,6 +19,7 @@
 #include <cstring>
 #include <ctime>
 #include <cstddef>
+#include <iostream>
 
 // Common C++ includes
 #include <algorithm>
@@ -38,6 +39,8 @@
 #include <condition_variable>
 #include <list>
 #include <thread>
+#include <string>
+#include <fstream>
 
 // Common OBS includes
 #include <obs-module.h>
@@ -46,6 +49,7 @@
 #include <util/platform.h>
 #include <util/config-file.h>
 #include <util/util_uint64.h>
+#include <media-io/audio-resampler.h>
 
 #define __FUNCTION_NAME__ __func__
 
