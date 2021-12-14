@@ -36,9 +36,11 @@ void es::server::AsioTcpConnection::readMessage()
             json tmp;
             // tmp.parse(msg);
             _messages.push_back(msg);
-        } else
+            writeMessage("yes");
+        } else if (ec == boost::asio::error::eof)
+            std::cout << "[SERVER EASYSTREAM]: Socket has been disconnected" << std::endl;
+        else
             std::cout << "[SERVER EASYSTREAM]: ERROR READING MESSAGE: " << ec.message() << std::endl;
-        writeMessage("yes");
         readMessage();
     });
     // boost::asio::async_read(_socket, boost::asio::buffer(_buffer, 2048), [this](boost::system::error_code ec, std::size_t length) {
