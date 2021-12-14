@@ -20,6 +20,8 @@ namespace es::obs {
             static void InputAudioCaptureCallback(void *priv_data, obs_source_t *, const struct audio_data *data, bool muted);
 
         private:
+
+
             obs_source_t *_source;
             audio_resampler_t *resampler = nullptr;
             std::string text;

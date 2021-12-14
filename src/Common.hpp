@@ -20,6 +20,10 @@
 #include <ctime>
 #include <cstddef>
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdint.h>
 
 // Common C++ includes
 #include <algorithm>
@@ -58,5 +62,7 @@
 #include "plugin-macros.generated.h"
 #include "Macros.hpp"
 
+
+#include <CaptionStream.h>
 
 #endif /* !COMMON_HPP_ */

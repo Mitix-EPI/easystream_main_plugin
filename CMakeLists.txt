@@ -60,6 +60,8 @@ configure_file(
     ../ci/ci_includes.generated.cmd
 )
 
+add_subdirectory(lib/caption_stream)
+
 file(GLOB_RECURSE PLUGIN_SOURCES src/*.cpp)
 
 set(PLUGIN_HEADERS
@@ -76,6 +78,7 @@ include_directories(
 )
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
+    caption_stream
 	libobs
 	Qt5::Core
 	Qt5::Widgets
