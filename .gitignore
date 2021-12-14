@@ -31,11 +31,13 @@
 *.out
 *.app
 
-build
+build*
 ci/linux/build
 ci/macos/build
 ci/windows/build
+ci/*.generated.*
 CMakeFiles
+installer/*.generated.*
 *.tar.gz
 
 cmake_install.cmake
@@ -47,6 +49,9 @@ cmake_uninstall.cmake
 ci/obs-studio
 
 .DS_Store
+
+#docs
+!docs/Makefile
 
 ### VisualStudioCode ###
 .vscode/*
