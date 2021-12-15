@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
     char *tempFilenameStub = tmpnam(NULL);
     sprintf(wavFile, "%s.wav", tempFilenameStub);
     printf("%s\n", wavFile);
-    hdr = genericWAVHeader(44000, 16, 2);
+    hdr = genericWAVHeader(16000, 16, 2);
     if (!hdr)
     {
         fprintf(stderr, "Error allocating WAV header.n");

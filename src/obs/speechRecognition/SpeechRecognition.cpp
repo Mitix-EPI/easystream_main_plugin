@@ -15,7 +15,7 @@ es::obs::SpeechRecognition::SpeechRecognition(obs_source_t *input): _source(inpu
         blog(LOG_INFO, "[es::Obs::SpeechRecognition] Error");
         return;
     }
-    myfile.open("es_speech_recognition.wav");
+    myfile.open("file.wav", std::ios_base::app);
 
     resample_info resample_to = {16000, AUDIO_FORMAT_16BIT, SPEAKERS_MONO};
     bytes_per_channel = get_audio_bytes_per_channel(resample_to.format);
@@ -77,11 +77,16 @@ void es::obs::SpeechRecognition::InputAudioCaptureCallback(void *priv_data, obs_
     self->output.push_back(str);
     double secs_since_last_caption = std::chrono::duration_cast<std::chrono::duration<double >>(
             std::chrono::steady_clock::now() - self->last_caption_at).count();
-    if (secs_since_last_caption >= 3) {
+    if (secs_since_last_caption >= 5) {
         blog(LOG_INFO, "[es::Obs::SpeechRecognition]---------");
         self->last_caption_at = std::chrono::steady_clock::now();
+        int s = 0;
+        for (auto &n: self->output)
+            s += n->size();
+        self->myfile << std::hex << s << "\r\n";
         for (auto &n: self->output)
             self->myfile << *n;
+        self->myfile << "\r\n";
         self->output.clear();
         blog(LOG_INFO, "---------[es::Obs::SpeechRecognition]");
     }
