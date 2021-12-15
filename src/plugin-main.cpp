@@ -32,7 +32,9 @@ void startServer(std::shared_ptr<void>)
 
 	blog(LOG_INFO, "[EASYSTREAM STARTED TCP SERVER]");
 	server.start();
-	while (1);
+	while (1) {
+		server.update();
+	};
 }
 
 void test(std::shared_ptr<void>)
