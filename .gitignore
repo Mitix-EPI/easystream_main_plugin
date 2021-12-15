@@ -65,3 +65,7 @@ ci/obs-studio
 
 # Support for Project snippet scope
 !.vscode/*.code-snippets
+
+.vscode
+
+tmp.txt
