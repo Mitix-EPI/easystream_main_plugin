@@ -112,7 +112,7 @@ jobs:
       - name: Package
         if: ${{ github.event_name == 'push' }}
         run: |
-          call "%~dp0..\ci_includes.generated.cmd"
+          "%~dp0..\ci_includes.generated.cmd"
           mkdir package
           cd package
           git rev-parse --short HEAD > package-version.txt
