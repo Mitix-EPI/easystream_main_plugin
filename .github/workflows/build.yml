@@ -50,7 +50,7 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         uses: actions/upload-artifact@v2.2.0
         with:
-          name: easyStream-plugin-linux.dmg
+          name: easyStream-plugin-linux.deb
           path: "package/*.deb"
 
   win64Build:
