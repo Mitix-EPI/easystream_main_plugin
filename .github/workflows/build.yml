@@ -27,7 +27,7 @@ jobs:
         uses: actions/upload-artifact@v2.2.0
         with:
           name: easyStream-plugin-macOS.dmg
-          path: "package/*.dmg"
+          path: "release/*.dmg"
   ubuntuBuild:
     runs-on: ubuntu-latest
     steps:
@@ -111,13 +111,24 @@ jobs:
           msbuild /m /p:Configuration=RelWithDebInfo .\obs-easystream-main-plugin.sln
       - name: Package
         if: ${{ github.event_name == 'push' }}
-        run: ./ci/linux/package-windows.cmd
+        run: |
+          call "%~dp0..\ci_includes.generated.cmd"
+          mkdir package
+          cd package
+          git rev-parse --short HEAD > package-version.txt
+          set /p PackageVersion=<package-version.txt
+          del package-version.txt
+          REM Package ZIP archive
+          7z a "%PluginName%-%PackageVersion%-Windows.zip" "..\release\*"
+          REM Build installer
+          iscc ..\installer\installer-Windows.generated.iss /O. /F"%PluginName%-%PackageVersion%-Windows-Installer"
+
       - name: Release
         if: ${{ github.event_name == 'push' }}
         uses: actions/upload-artifact@v2.2.0
         with:
           name: easyStream-plugin-windows.zip
-          path: "package/*.exe,package/*.zip"
+          path: "release/*.exe,package/*.zip"
 
   win32Build:
     name: "win32Build"
@@ -175,12 +186,3 @@ jobs:
           cd build32
           cmake -G"${{ env.CMAKE_GENERATOR }}" -A"Win32" -DCMAKE_SYSTEM_VERSION="${{ env.CMAKE_SYSTEM_VERSION }}" -DQTDIR="${{ github.workspace }}/cmbuild/QT/${{ env.QT_VERSION }}/msvc2019" -DLibObs_DIR="${{ github.workspace }}\obs-studio\build32\libobs" -DLIBOBS_INCLUDE_DIR="${{ github.workspace }}\obs-studio\libobs" -DLIBOBS_LIB="${{ github.workspace }}\obs-studio\build32\libobs\RelWithDebInfo\obs.lib" -DOBS_FRONTEND_LIB="${{ github.workspace }}\obs-studio\build32\UI\obs-frontend-api\RelWithDebInfo\obs-frontend-api.lib" ..
           msbuild /m /p:Configuration=RelWithDebInfo .\obs-easystream-main-plugin.sln
-      - name: Package
-        if: ${{ github.event_name == 'push' }}
-        run: ./ci/linux/package-windows.cmd
-      - name: Release
-        if: ${{ github.event_name == 'push' }}
-        uses: actions/upload-artifact@v2.2.0
-        with:
-          name: easyStream-plugin-windows32.zip
-          path: "package/*.exe,package/*.zip"
