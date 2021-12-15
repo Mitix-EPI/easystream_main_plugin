@@ -21,7 +21,11 @@ jobs:
         run: ./ci/macos/build-macos.sh
       - name: Package
         if: ${{ github.event_name == 'push' }}
-        run: ./ci/macos/package-macos.sh
+        run: |
+          wget http://s.sudre.free.fr/Software/files/Packages.dmg
+          hdiutil attach Packages.dmg
+          sudo installer -pkg /Volumes/Packages\ 1.2.9/Install\ Packages.pkg -target /
+          ./ci/macos/package-macos.sh
       - name: Release
         if: ${{ github.event_name == 'push' }}
         uses: actions/upload-artifact@v2.2.0
