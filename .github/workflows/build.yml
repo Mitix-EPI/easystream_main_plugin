@@ -111,18 +111,7 @@ jobs:
           msbuild /m /p:Configuration=RelWithDebInfo .\obs-easystream-main-plugin.sln
       - name: Package
         if: ${{ github.event_name == 'push' }}
-        run: |
-          "%~dp0..\ci_includes.generated.cmd"
-          mkdir package
-          cd package
-          git rev-parse --short HEAD > package-version.txt
-          set /p PackageVersion=<package-version.txt
-          del package-version.txt
-          REM Package ZIP archive
-          7z a "%PluginName%-%PackageVersion%-Windows.zip" "..\release\*"
-          REM Build installer
-          iscc ..\installer\installer-Windows.generated.iss /O. /F"%PluginName%-%PackageVersion%-Windows-Installer"
-
+        run: ci/windows/package-windows.cmd
       - name: Release
         if: ${{ github.event_name == 'push' }}
         uses: actions/upload-artifact@v2.2.0
