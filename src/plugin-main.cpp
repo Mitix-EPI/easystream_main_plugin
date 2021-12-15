@@ -28,7 +28,7 @@ os_cpu_usage_info_t *cpuUsageInfo;
 
 void startServer(std::shared_ptr<void>)
 {
-	es::server::AsioTcpServer server("0.0.0.0", 47920);
+	es::server::AsioTcpServer server("0.0.0.0", 47920, tracker->getAudioMap());
 
 	blog(LOG_INFO, "[EASYSTREAM STARTED TCP SERVER]");
 	server.start();

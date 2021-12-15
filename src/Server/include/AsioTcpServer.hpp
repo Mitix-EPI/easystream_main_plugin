@@ -23,7 +23,7 @@ namespace es {
         class AsioTcpServer : public boost::enable_shared_from_this<AsioTcpServer>
         {
             public:
-                AsioTcpServer(const std::string &host, int port);
+                AsioTcpServer(const std::string &host, int port, const std::unordered_map<std::string, std::shared_ptr<obs::AutoAudioLeveler>> &);
                 ~AsioTcpServer();
 
                 bool start();
@@ -33,7 +33,9 @@ namespace es {
             private:
                 void getAllMics(const nlohmann::json &, boost::shared_ptr<AsioTcpConnection> &);
                 void getAllEvents(const nlohmann::json &, boost::shared_ptr<AsioTcpConnection> &);
+                void setVolumeToMic(const nlohmann::json &, boost::shared_ptr<AsioTcpConnection> &);
                 void waitForClientConnection();
+                const std::unordered_map<std::string, std::shared_ptr<obs::AutoAudioLeveler>> &_audioLeveler;
                 std::unordered_map<std::string, void (AsioTcpServer::*)(const nlohmann::json &, boost::shared_ptr<AsioTcpConnection> &)> _handler;
                 std::vector<boost::shared_ptr<AsioTcpConnection>> _connections;
                 boost::thread _threadContext;

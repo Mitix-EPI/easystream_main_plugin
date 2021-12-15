@@ -9,9 +9,10 @@
 
 using nlohmann::json;
 
-es::server::AsioTcpServer::AsioTcpServer(const std::string &host, int port): _endPoint(boost::asio::ip::make_address(host), port), _acceptor(_ioContext, _endPoint)
+es::server::AsioTcpServer::AsioTcpServer(const std::string &host, int port, const std::unordered_map<std::string, std::shared_ptr<obs::AutoAudioLeveler>> &_mps): _audioLeveler(_mps), _endPoint(boost::asio::ip::make_address(host), port), _acceptor(_ioContext, _endPoint)
 {
     _handler["getAllMics"] = &AsioTcpServer::getAllMics;
+    _handler["setVolumeToMic"] = &AsioTcpServer::setVolumeToMic;
 }
 
 es::server::AsioTcpServer::~AsioTcpServer()
@@ -63,7 +64,7 @@ void es::server::AsioTcpServer::writeMessage(const std::string &msg)
 
 void es::server::AsioTcpServer::update()
 {
-    _connections.erase(std::remove_if(_connections.begin(), _connections.end(), [this](const boost::shared_ptr<AsioTcpConnection> &con){
+    _connections.erase(std::remove_if(_connections.begin(), _connections.end(), [this](const boost::shared_ptr<AsioTcpConnection> con){
         return (!con->isConnected());
     }), _connections.end());
     for (auto &con: _connections) {
@@ -78,14 +79,45 @@ void es::server::AsioTcpServer::update()
 void es::server::AsioTcpServer::getAllMics(const nlohmann::json &j, boost::shared_ptr<AsioTcpConnection> &con)
 {
     std::vector<json> mics = es::utils::obs::listHelper::GetMicsList();
-    // std::vector<std::string> micStr;
     json toSend;
 
-    // for (const auto &j: mics)
-    //     micStr.push_back(j.dump());
-    // json tmp = json::parse(mics.begin(), mics.end());
-
+    for (auto &m: mics) {
+        float tmpValue = _audioLeveler.find(m["micName"])->second->getDesiredLevel() + 60;
+        m["value"] = floor((tmpValue * 100) / 60);
+        m["isActive"] = _audioLeveler.find(m["micName"])->second->isActive();
+    }
     toSend["length"] = mics.size();
     toSend["mics"] = mics;
+    toSend["statusCode"] = 200;
+    toSend["message"] = std::string("OK");
     con->writeMessage(toSend.dump());
 }
+
+void es::server::AsioTcpServer::setVolumeToMic(const nlohmann::json &j, boost::shared_ptr<AsioTcpConnection> &con)
+{
+    json toSend;
+    float value = j["args"]["value"];
+
+    auto tmp = _audioLeveler.find(j["args"]["micId"]);
+    if (tmp == _audioLeveler.end()) {
+        std::string tmpJ = j["micId"];
+        toSend["statusCode"] = 404;
+        toSend["message"] = tmpJ + " not found";
+    } else {
+        float level = (value * 60) / 100;
+        level -= 60;
+        std::cout << "level is: " << level << std::endl;
+        tmp->second->setDesiredLevel(level);
+        toSend["statusCode"] = 200;
+        toSend["message"] = std::string("OK");
+    }
+    con->writeMessage(toSend.dump());
+}
+
+
+// 60 -> 100
+// 0
+
+
+//-40 + 60
+//

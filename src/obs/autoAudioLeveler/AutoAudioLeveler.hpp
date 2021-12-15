@@ -9,6 +9,7 @@
 #define AUTOAUDIOLEVEL_HPP_
 
 #include "../../Common.hpp"
+#include <iostream>
 
 namespace es::obs
 {
@@ -22,6 +23,7 @@ namespace es::obs
 
         float _desiredAudioLevel;
         float _minDetectLevel;
+        bool _active;
 
     public:
         AutoAudioLeveler(obs_source_t *input);
@@ -32,6 +34,9 @@ namespace es::obs
         float computeLerp(float audioVolume);
         void ComputeAudioLevel(float audioLevelMul, float audioVolume);
         float CalculateAudioLevel(const struct audio_data *data, bool muted);
+        const float &getDesiredLevel() const;
+        void setDesiredLevel(const float &);
+        bool isActive() const;
     };
 }
 
