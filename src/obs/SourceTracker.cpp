@@ -383,3 +383,8 @@ bool es::obs::SourceTracker::filterScenes(std::string, obs_source_t* source)
 {
 	return (obs_source_get_type(source) != OBS_SOURCE_TYPE_SCENE);
 }
+
+const std::unordered_map<std::string, std::shared_ptr<es::obs::AutoAudioLeveler>> &es::obs::SourceTracker::getAudioMap() const
+{
+	return (_audioLevelers);
+}

@@ -9,6 +9,9 @@
 #define SOURCETRACKER_HPP_
 
 #include "../utils/Utils.hpp"
+#include <unordered_map>
+#include <memory>
+#include "autoAudioLeveler/AutoAudioLeveler.hpp"
 
 namespace es::obs {
     class SourceTracker {
@@ -22,6 +25,7 @@ namespace es::obs {
 		    static bool filterVideoSources(std::string name, obs_source_t* source);
 		    static bool filterTransitions(std::string name, obs_source_t* source);
 		    static bool filterScenes(std::string name, obs_source_t* source);
+			const std::unordered_map<std::string, std::shared_ptr<AutoAudioLeveler>> &getAudioMap() const;
 
         private:
 
@@ -93,6 +97,8 @@ namespace es::obs {
 
             std::map<std::string, std::shared_ptr<obs_weak_source_t>> _sources;
             bool _obsLoaded;
+			// std::vector<AutoAudioLeveler> _audioSource;
+			std::unordered_map<std::string, std::shared_ptr<AutoAudioLeveler>> _audioLevelers;
     };
 }
 

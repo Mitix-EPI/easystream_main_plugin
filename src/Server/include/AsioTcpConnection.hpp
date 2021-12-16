@@ -23,10 +23,13 @@ namespace es {
                 void readMessage();
                 void writeMessage(const std::string &msg);
                 const boost::asio::ip::tcp::socket &getSocket() const;
+                const std::vector<nlohmann::json> getMessage();
+                bool isConnected() const;
             private:
+                bool _connected;
                 char _buffer[MSGMAX];
                 boost::asio::ip::tcp::socket _socket;
-                std::vector<std::string> _messages;
+                std::vector<nlohmann::json> _messages;
         };
     }
 }
