@@ -14,5 +14,6 @@
 #include "Json.hpp"
 #include "Obs.hpp"
 #include "Thread.hpp"
+#include "Window.hpp"
 
 #endif /* !UTILS_HPP_ */

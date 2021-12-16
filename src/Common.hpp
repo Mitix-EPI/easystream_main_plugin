@@ -38,6 +38,21 @@
 #include <condition_variable>
 #include <list>
 #include <thread>
+#include <fstream>
+#include <sstream>
+
+//QT includes
+#include <QStringList>
+#include <QRegularExpression>
+#include <QLibrary>
+
+//X11 includes
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
+#include <X11/Xutil.h>
+#include <X11/keysym.h>
+#include <X11/extensions/scrnsaver.h>
+#include <X11/extensions/XTest.h>
 
 // Common OBS includes
 #include <obs-module.h>

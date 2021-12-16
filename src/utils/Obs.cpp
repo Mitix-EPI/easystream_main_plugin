@@ -348,6 +348,28 @@ std::vector<json> es::utils::obs::listHelper::GetInputList()
 	return inputInfo;
 }
 
+std::vector<json> es::utils::obs::listHelper::GetOutputList()
+{
+	std::vector<json> outputInfo;
+
+	auto outputEnumProc = [](void *param, obs_output_t *output) {
+		auto outputInfo = reinterpret_cast<std::vector<json> *>(param);
+
+		std::string outputKind = obs_output_get_id(output);
+
+		json outputJson;
+		outputJson["outputName"] = obs_output_get_name(output);
+		outputJson["outputKind"] = outputKind;
+
+		outputInfo->push_back(outputJson);
+		return true;
+	};
+	// Actually enumerates only public outputs, despite the name
+	obs_enum_outputs(outputEnumProc, &outputInfo);
+
+	return outputInfo;
+}
+
 std::vector<json> es::utils::obs::listHelper::GetInputByKindList(std::string inputKind)
 {
 	EnumInputInfo inputInfo;
