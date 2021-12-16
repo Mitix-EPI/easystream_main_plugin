@@ -120,8 +120,8 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         uses: actions/upload-artifact@v2.2.0
         with:
-          name: easyStream-plugin-windows.zip
-          path: "release/*.exe,package/*.zip"
+          name: easyStream-plugin-windows.exe
+          path: "package/*.exe"
 
   win32Build:
     name: "win32Build"
@@ -179,3 +179,12 @@ jobs:
           cd build32
           cmake -G"${{ env.CMAKE_GENERATOR }}" -A"Win32" -DCMAKE_SYSTEM_VERSION="${{ env.CMAKE_SYSTEM_VERSION }}" -DQTDIR="${{ github.workspace }}/cmbuild/QT/${{ env.QT_VERSION }}/msvc2019" -DLibObs_DIR="${{ github.workspace }}\obs-studio\build32\libobs" -DLIBOBS_INCLUDE_DIR="${{ github.workspace }}\obs-studio\libobs" -DLIBOBS_LIB="${{ github.workspace }}\obs-studio\build32\libobs\RelWithDebInfo\obs.lib" -DOBS_FRONTEND_LIB="${{ github.workspace }}\obs-studio\build32\UI\obs-frontend-api\RelWithDebInfo\obs-frontend-api.lib" ..
           msbuild /m /p:Configuration=RelWithDebInfo .\obs-easystream-main-plugin.sln
+      - name: Package
+        if: ${{ github.event_name == 'push' }}
+        run: ci/windows/package-windows.cmd
+      - name: Release
+        if: ${{ github.event_name == 'push' }}
+        uses: actions/upload-artifact@v2.2.0
+        with:
+          name: easyStream-plugin-windows.exe
+          path: "package/*.exe"
