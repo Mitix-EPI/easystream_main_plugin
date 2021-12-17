@@ -25,11 +25,26 @@ std::shared_ptr<es::obs::SourceTracker> tracker = std::make_shared<es::obs::Sour
 std::shared_ptr<es::thread::ThreadPool> threadPool = std::make_shared<es::thread::ThreadPool>(10);
 os_cpu_usage_info_t *cpuUsageInfo;
 
-void test(std::shared_ptr<void>)
+void sceneSwitcherIA(std::shared_ptr<void>)
 {
-	blog(LOG_INFO, "[Thread::ThreadPool]: Thread start");
-	std::this_thread::sleep_for(std::chrono::seconds(5));
-	blog(LOG_INFO, "[Thread::ThreadPool]: Thread finish");
+	std::this_thread::sleep_for(std::chrono::seconds(2));
+	while (1)
+	{
+		std::vector<std::string> windowsList = es::utils::window::GetWindowList();
+		std::vector<json> scenesList = es::utils::obs::listHelper::GetSceneList();
+		bool switched = false;
+		
+		for (auto &scene : scenesList) {
+			for (auto &window : windowsList) {
+				if (scene["sceneName"] == window && !switched) {
+					switched = true;
+					if (obs_source_get_name(obs_frontend_get_current_scene()) == scene["sceneName"])
+						continue;
+					obs_frontend_set_current_scene(obs_scene_get_source(obs_get_scene_by_name(scene["sceneName"].get<std::string>().c_str())));
+				}
+			}
+		}
+	}
 }
 
 bool obs_module_load(void)
@@ -38,7 +53,7 @@ bool obs_module_load(void)
 
 	blog(LOG_INFO, "-----------------------------------------");
 	tracker->init();
-	threadPool->push(std::function(test), nullptr);
+	threadPool->push(std::function(sceneSwitcherIA), nullptr);
 	cpuUsageInfo = os_cpu_usage_info_start();
 	blog(LOG_INFO, "-----------------------------------------");
 	return true;
