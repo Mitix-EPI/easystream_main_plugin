@@ -64,8 +64,33 @@ file(GLOB_RECURSE PLUGIN_SOURCES src/*.cpp)
 set(PLUGIN_HEADERS
 	src/plugin-macros.generated.h)
 
+# --- Platform-specific settings ---
+
+if(APPLE)
+  find_library(COCOA Cocoa)
+  if(BUILD_OUT_OF_TREE)
+    find_package(Qt5MacExtras REQUIRED)
+  endif()
+  include_directories(${COCOA})
+endif()
+
+if(WIN32)
+  set(obs_main_plugin_PLATFORM_SOURCES
+        src/utils/WindowWin32.cpp)
+elseif(APPLE)
+  set(obs_main_plugin_PLATFORM_SOURCES
+        src/utils/WindowMacOS.mm)
+  set_source_files_properties(src/utils/WindowMacOS.mm
+                              PROPERTIES COMPILE_FLAGS "-fobjc-arc")
+  set(obs_main_plugin_PLATFORM_LIBS ${COCOA})
+else()
+  set(obs_main_plugin_PLATFORM_SOURCES
+      src/utils/WindowLinux.cpp)
+  set(obs_main_plugin_PLATFORM_LIBS Xss ${PROCPS_LIBRARY})
+endif()
+
 # --- Platform-independent build settings ---
-add_library(${CMAKE_PROJECT_NAME} MODULE ${PLUGIN_SOURCES} ${PLUGIN_HEADERS})
+add_library(${CMAKE_PROJECT_NAME} MODULE ${PLUGIN_SOURCES} ${PLUGIN_HEADERS} ${obs_main_plugin_PLATFORM_SOURCES})
 
 include_directories(
 	"${LIBOBS_INCLUDE_DIR}/../UI/obs-frontend-api"
@@ -74,6 +99,7 @@ include_directories(
 )
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
+    ${obs_main_plugin_PLATFORM_LIBS}
 	libobs
 	Qt5::Core
 	Qt5::Widgets
@@ -214,19 +240,10 @@ endif()
 # --- End of section ---
 
 # -- OS X specific build settings and tasks --
-if(APPLE)
-    find_library(COCOA Cocoa)
-    include_directories(${COCOA})
-    set(PLUGIN_SOURCES_APPLE
-        src/utils/WindowMacOS.mm)
-    set_source_files_properties(src/utils/WindowMacOS.mm
-                            PROPERTIES COMPILE_FLAGS "-fobjc-arc")
-
-    add_library(${CMAKE_PROJECT_NAME} MODULE ${PLUGIN_SOURCES_APPLE})
-    
+if(APPLE)    
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++ -fvisibility=default")
     
 	set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES PREFIX "")
-	target_link_libraries(${CMAKE_PROJECT_NAME} "${OBS_FRONTEND_LIB}" ${COCOA})
+	target_link_libraries(${CMAKE_PROJECT_NAME} "${OBS_FRONTEND_LIB}")
 endif()
 # -- End of section --
