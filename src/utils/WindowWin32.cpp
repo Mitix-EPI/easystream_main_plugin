@@ -248,7 +248,7 @@ bool es::utils::window::IsInFocus(const QString &executable)
 	}
 
 	WCHAR executablePath[600];
-	GetModuleFileNameEx(process, 0, executablePath, 600);
+	GetModuleFileNameExW(process, 0, executablePath, 600);
 	CloseHandle(process);
 
 	QString file = QString::fromWCharArray(executablePath)
