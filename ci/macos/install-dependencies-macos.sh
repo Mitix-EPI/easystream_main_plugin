@@ -22,7 +22,7 @@ brew update >/dev/null
 
 echo "[=> Checking installed Homebrew formulas.."
 BREW_PACKAGES=$(brew list)
-BREW_DEPENDENCIES="jack speexdsp ccache swig mbedtls cmake wget"
+BREW_DEPENDENCIES="jack speexdsp ccache swig mbedtls cmake wget boost asio"
 
 for DEPENDENCY in ${BREW_DEPENDENCIES}; do
     if echo "${BREW_PACKAGES}" | grep -q "^${DEPENDENCY}\$"; then

@@ -15,11 +15,12 @@ if [ "${HAS_CMAKE}" = "" ]; then
 fi
 
 echo "=> Building plugin for macOS."
-cmake . \
+mkdir -p build && cd build
+cmake .. \
 	-DQTDIR="/tmp/obsdeps" \
-	-DLIBOBS_INCLUDE_DIR=../obs-studio/libobs \
-	-DLIBOBS_LIB=../obs-studio/libobs \
-	-DOBS_FRONTEND_LIB="$(pwd)/../obs-studio/build/UI/obs-frontend-api/libobs-frontend-api.dylib" \
+	-DLIBOBS_INCLUDE_DIR=../../obs-studio/libobs \
+	-DLIBOBS_LIB=../../obs-studio/libobs \
+	-DOBS_FRONTEND_LIB="$(pwd)/../../obs-studio/build/UI/obs-frontend-api/libobs-frontend-api.dylib" \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DCMAKE_INSTALL_PREFIX=/usr \
-	 && make -j4
+&& make -j4

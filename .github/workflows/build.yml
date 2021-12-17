@@ -2,30 +2,42 @@ name: CI Multiplatform Build
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
   push:
-    branches: [ feature-github-ci ]
+    branches: [main]
 
 jobs:
   macosBuild:
-   runs-on: macos-latest
+    runs-on: macos-latest
 
-   steps:
-     - name: Checkout
-       uses: actions/checkout@v2
-     - name: Install deps
-       run: ./ci/macos/install-dependencies-macos.sh
-     - name: Install obs
-       run: ./ci/macos/install-build-obs-macos.sh
-     - name: Compile
-       run: ./ci/macos/build-macos.sh
-
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install deps
+        run: ./ci/macos/install-dependencies-macos.sh
+      - name: Install obs
+        run: ./ci/macos/install-build-obs-macos.sh
+      - name: Compile
+        run: ./ci/macos/build-macos.sh
+      - name: Package
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          wget http://s.sudre.free.fr/Software/files/Packages.dmg
+          hdiutil attach Packages.dmg
+          sudo installer -pkg /Volumes/Packages\ 1.2.9/Install\ Packages.pkg -target /
+          ./ci/macos/package-macos.sh
+      - name: Release
+        if: ${{ github.event_name == 'push' }}
+        uses: actions/upload-artifact@v2.2.0
+        with:
+          name: easyStream-plugin-macOS.dmg
+          path: "release/*.dmg"
   ubuntuBuild:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Install deps
-        run: | 
+        run: |
           sudo apt-get update && sudo apt-get install -y \
             g++-multilib \
             gcc-multilib \
@@ -35,49 +47,58 @@ jobs:
         run: ./ci/linux/install-dependencies-ubuntu.sh
       - name: Compile
         run: ./ci/linux/build-ubuntu.sh
+      - name: Package
+        if: ${{ github.event_name == 'push' }}
+        run: ./ci/linux/package-ubuntu.sh
+      - name: Release
+        if: ${{ github.event_name == 'push' }}
+        uses: actions/upload-artifact@v2.2.0
+        with:
+          name: easyStream-plugin-linux.deb
+          path: "package/*.deb"
 
   win64Build:
-    name: 'win64Build'
+    name: "win64Build"
     runs-on: [windows-latest]
     env:
-      QT_VERSION: '5.15.2'
+      QT_VERSION: "5.15.2"
       CMAKE_GENERATOR: "Visual Studio 16 2019"
       CMAKE_SYSTEM_VERSION: "10.0.18363.657"
-      WINDOWS_DEPS_VERSION: '2019'
-      WINDOWS_DEPS_CACHE_VERSION: '1'
+      WINDOWS_DEPS_VERSION: "2019"
+      WINDOWS_DEPS_CACHE_VERSION: "1"
     steps:
-      - name: 'Add msbuild to PATH'
+      - name: "Add msbuild to PATH"
         uses: microsoft/setup-msbuild@v1.0.2
-      - name: 'Checkout'
+      - name: "Checkout"
         uses: actions/checkout@v2.3.3
-      - name: 'Restore QT dependency from cache'
+      - name: "Restore QT dependency from cache"
         id: qt-cache
         uses: actions/cache@v2.1.2
         env:
-          CACHE_NAME: 'windows-qt-cache'
+          CACHE_NAME: "windows-qt-cache"
         with:
           path: ${{ github.workspace }}/cmbuild/QT
           key: ${{ runner.os }}-pr-${{ env.CACHE_NAME }}-${{ env.QT_VERSION }}
-      - name: 'Install Qt'
+      - name: "Install Qt"
         shell: bash
         if: steps.qt-cache.outputs.cache-hit != 'true'
         run: |
           curl -kLO https://cdn-fastly.obsproject.com/downloads/Qt_${{ env.QT_VERSION }}.7z -f --retry 5 -C -
           7z x Qt_${{ env.QT_VERSION }}.7z -o"${{ github.workspace }}/cmbuild/QT"
-      - name: 'Restore pre-built dependencies from cache'
+      - name: "Restore pre-built dependencies from cache"
         id: deps-cache
         uses: actions/cache@v2.1.2
         env:
-          CACHE_NAME: 'windows-deps-cache'
+          CACHE_NAME: "windows-deps-cache"
         with:
           path: ${{ github.workspace }}/cmbuild/deps
           key: ${{ runner.os }}-pr-${{ env.CACHE_NAME }}-${{ env.WINDOWS_DEPS_VERSION }}-${{ env.WINDOWS_DEPS_CACHE_VERSION }}
-      - name: 'Install prerequisite: Pre-built dependencies'
+      - name: "Install prerequisite: Pre-built dependencies"
         if: steps.deps-cache.outputs.cache-hit != 'true'
         run: |
           curl -kLO https://cdn-fastly.obsproject.com/downloads/dependencies${{ env.WINDOWS_DEPS_VERSION }}.zip -f --retry 5 -C -
           7z x dependencies${{ env.WINDOWS_DEPS_VERSION }}.zip -o"${{ github.workspace }}/cmbuild/deps"
-      - name: 'Build OBS'
+      - name: "Build OBS"
         run: |
           git clone https://github.com/obsproject/obs-studio
           cd obs-studio
@@ -85,55 +106,65 @@ jobs:
           cd build64
           cmake -G"${{ env.CMAKE_GENERATOR }}" -A"x64" -DCMAKE_SYSTEM_VERSION="${{ env.CMAKE_SYSTEM_VERSION }}" -DDISABLE_PLUGINS=true -DDepsPath="${{ github.workspace }}/cmbuild/deps/win64" -DQTDIR="${{ github.workspace }}/cmbuild/QT/${{ env.QT_VERSION }}/msvc2019_64" -DCOPIED_DEPENDENCIES=FALSE -DCOPY_DEPENDENCIES=TRUE ..
           msbuild /m /p:Configuration=RelWithDebInfo .\obs-studio.sln
-      - name: 'Build Plugin'
+      - name: "Build Plugin"
         working-directory: ${{ github.workspace }}
         run: |
           mkdir build64
           cd build64
           cmake -G"${{ env.CMAKE_GENERATOR }}" -A"x64" -DCMAKE_SYSTEM_VERSION="${{ env.CMAKE_SYSTEM_VERSION }}" -DQTDIR="${{ github.workspace }}/cmbuild/QT/${{ env.QT_VERSION }}/msvc2019_64" -DLibObs_DIR="${{ github.workspace }}\obs-studio\build64\libobs" -DLIBOBS_INCLUDE_DIR="${{ github.workspace }}\obs-studio\libobs" -DLIBOBS_LIB="${{ github.workspace }}\obs-studio\build64\libobs\RelWithDebInfo\obs.lib" -DOBS_FRONTEND_LIB="${{ github.workspace }}\obs-studio\build64\UI\obs-frontend-api\RelWithDebInfo\obs-frontend-api.lib" ..
           msbuild /m /p:Configuration=RelWithDebInfo .\obs-easystream-main-plugin.sln
+      - name: Package
+        if: ${{ github.event_name == 'push' }}
+        run: ci/windows/package-windows.cmd
+      - name: Release
+        if: ${{ github.event_name == 'push' }}
+        uses: actions/upload-artifact@v2.2.0
+        with:
+          name: easyStream-plugin-windows.exe
+          path: "package/*.exe"
+
   win32Build:
-    name: 'win32Build'
+    name: "win32Build"
     runs-on: [windows-latest]
     env:
-      QT_VERSION: '5.15.2'
+      QT_VERSION: "5.15.2"
       CMAKE_GENERATOR: "Visual Studio 16 2019"
       CMAKE_SYSTEM_VERSION: "10.0.18363.657"
-      WINDOWS_DEPS_VERSION: '2019'
-      WINDOWS_DEPS_CACHE_VERSION: '1'
+      WINDOWS_DEPS_VERSION: "2019"
+      WINDOWS_DEPS_CACHE_VERSION: "1"
     steps:
-      - name: 'Add msbuild to PATH'
+      - name: "Add msbuild to PATH"
         uses: microsoft/setup-msbuild@v1.0.2
-      - name: 'Checkout'
+      - name: "Checkout"
         uses: actions/checkout@v2.3.3
-      - name: 'Restore QT dependency from cache'
+      - name: "Restore QT dependency from cache"
         id: qt-cache
         uses: actions/cache@v2.1.2
         env:
-          CACHE_NAME: 'windows-qt-cache'
+          CACHE_NAME: "windows-qt-cache"
         with:
           path: ${{ github.workspace }}/cmbuild/QT
           key: ${{ runner.os }}-pr-${{ env.CACHE_NAME }}-${{ env.QT_VERSION }}
-      - name: 'Install Qt'
+      - name: "Install Qt"
         shell: bash
         if: steps.qt-cache.outputs.cache-hit != 'true'
         run: |
           curl -kLO https://cdn-fastly.obsproject.com/downloads/Qt_${{ env.QT_VERSION }}.7z -f --retry 5 -C -
           7z x Qt_${{ env.QT_VERSION }}.7z -o"${{ github.workspace }}/cmbuild/QT"
-      - name: 'Restore pre-built dependencies from cache'
+      - name: "Restore pre-built dependencies from cache"
         id: deps-cache
         uses: actions/cache@v2.1.2
         env:
-          CACHE_NAME: 'windows-deps-cache'
+          CACHE_NAME: "windows-deps-cache"
         with:
           path: ${{ github.workspace }}/cmbuild/deps
           key: ${{ runner.os }}-pr-${{ env.CACHE_NAME }}-${{ env.WINDOWS_DEPS_VERSION }}-${{ env.WINDOWS_DEPS_CACHE_VERSION }}
-      - name: 'Install prerequisite: Pre-built dependencies'
+      - name: "Install prerequisite: Pre-built dependencies"
         if: steps.deps-cache.outputs.cache-hit != 'true'
         run: |
           curl -kLO https://cdn-fastly.obsproject.com/downloads/dependencies${{ env.WINDOWS_DEPS_VERSION }}.zip -f --retry 5 -C -
           7z x dependencies${{ env.WINDOWS_DEPS_VERSION }}.zip -o"${{ github.workspace }}/cmbuild/deps"
-      - name: 'Build OBS'
+      - name: "Build OBS"
         run: |
           git clone https://github.com/obsproject/obs-studio
           cd obs-studio
@@ -141,10 +172,19 @@ jobs:
           cd build32
           cmake -G"${{ env.CMAKE_GENERATOR }}" -A"Win32" -DCMAKE_SYSTEM_VERSION="${{ env.CMAKE_SYSTEM_VERSION }}" -DDISABLE_PLUGINS=true -DDepsPath="${{ github.workspace }}/cmbuild/deps/win32" -DQTDIR="${{ github.workspace }}/cmbuild/QT/${{ env.QT_VERSION }}/msvc2019" -DCOPIED_DEPENDENCIES=FALSE -DCOPY_DEPENDENCIES=TRUE ..
           msbuild /m /p:Configuration=RelWithDebInfo .\obs-studio.sln
-      - name: 'Build Plugin'
+      - name: "Build Plugin"
         working-directory: ${{ github.workspace }}
         run: |
           mkdir build32
           cd build32
           cmake -G"${{ env.CMAKE_GENERATOR }}" -A"Win32" -DCMAKE_SYSTEM_VERSION="${{ env.CMAKE_SYSTEM_VERSION }}" -DQTDIR="${{ github.workspace }}/cmbuild/QT/${{ env.QT_VERSION }}/msvc2019" -DLibObs_DIR="${{ github.workspace }}\obs-studio\build32\libobs" -DLIBOBS_INCLUDE_DIR="${{ github.workspace }}\obs-studio\libobs" -DLIBOBS_LIB="${{ github.workspace }}\obs-studio\build32\libobs\RelWithDebInfo\obs.lib" -DOBS_FRONTEND_LIB="${{ github.workspace }}\obs-studio\build32\UI\obs-frontend-api\RelWithDebInfo\obs-frontend-api.lib" ..
           msbuild /m /p:Configuration=RelWithDebInfo .\obs-easystream-main-plugin.sln
+      - name: Package
+        if: ${{ github.event_name == 'push' }}
+        run: ci/windows/package-windows.cmd
+      - name: Release
+        if: ${{ github.event_name == 'push' }}
+        uses: actions/upload-artifact@v2.2.0
+        with:
+          name: easyStream-plugin-windows.exe
+          path: "package/*.exe"
