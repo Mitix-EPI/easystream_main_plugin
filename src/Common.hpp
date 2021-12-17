@@ -46,6 +46,7 @@
 #include <QRegularExpression>
 #include <QLibrary>
 
+#ifdef _LINUX 
 //X11 includes
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
@@ -53,6 +54,8 @@
 #include <X11/keysym.h>
 #include <X11/extensions/scrnsaver.h>
 #include <X11/extensions/XTest.h>
+
+#endif
 
 // Common OBS includes
 #include <obs-module.h>

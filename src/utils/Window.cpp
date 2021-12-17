@@ -5,6 +5,8 @@
 ** obs
 */
 
+#ifdef _LINUX 
+
 #include "Window.hpp"
 
 Display *xdisplay = 0;
@@ -399,3 +401,5 @@ bool es::utils::window::dataHelper::IsInFocus(const QString &executable)
 
 	return (equals || matches);
 }
+
+#endif
