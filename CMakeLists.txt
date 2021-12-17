@@ -33,7 +33,7 @@ endif()
 if (WIN32)
     set(Boost_ROOT "cmbuild/boost")
     set(Boost_INCLUDE_DIR "cmbuild/boost/include")
-    set(Boost_LIBRARY_DIR "cmbuild/boost/lib"
+    set(Boost_LIBRARY_DIR "cmbuild/boost/lib")
 endif()
 
 find_package(LibObs REQUIRED)
