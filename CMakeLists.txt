@@ -31,9 +31,9 @@ if (WIN32 OR APPLE)
 endif()
 
 if (WIN32)
-    set(Boost_ROOT "cmbuild/boost")
-    set(Boost_INCLUDE_DIR "cmbuild/boost/include")
-    set(Boost_LIBRARY_DIR "cmbuild/boost/lib")
+    set(BOOST_ROOT "cmbuild/boost")
+    set(BOOST_INCLUDE_DIR "cmbuild/boost/include")
+    set(BOOST_LIBRARY_DIR "cmbuild/boost/lib")
 endif()
 
 find_package(LibObs REQUIRED)
