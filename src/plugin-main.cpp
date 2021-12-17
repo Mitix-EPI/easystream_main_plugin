@@ -25,7 +25,6 @@ std::shared_ptr<es::obs::SourceTracker> tracker = std::make_shared<es::obs::Sour
 std::shared_ptr<es::thread::ThreadPool> threadPool = std::make_shared<es::thread::ThreadPool>(10);
 os_cpu_usage_info_t *cpuUsageInfo;
 
-
 void sceneSwitcherIA(std::shared_ptr<void>)
 {
 	std::this_thread::sleep_for(std::chrono::seconds(2));

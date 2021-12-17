@@ -215,6 +215,14 @@ endif()
 
 # -- OS X specific build settings and tasks --
 if(APPLE)
+    find_library(COCOA Cocoa)
+    include_directories(${COCOA})
+    set(PLUGIN_SOURCES
+        src/utils/WindowMacOS.mm)
+    set_source_files_properties(src/utils/WindowMacOS.mm
+                            PROPERTIES COMPILE_FLAGS "-fobjc-arc")
+    target_link_libraries(${CMAKE_PROJECT_NAME} ${COCOA})
+
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++ -fvisibility=default")
 
 	set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES PREFIX "")
