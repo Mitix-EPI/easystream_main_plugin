@@ -38,6 +38,13 @@
 #include <condition_variable>
 #include <list>
 #include <thread>
+#include <fstream>
+#include <sstream>
+
+//QT includes
+#include <QStringList>
+#include <QRegularExpression>
+#include <QLibrary>
 
 // Common OBS includes
 #include <obs-module.h>

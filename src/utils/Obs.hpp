@@ -46,6 +46,7 @@ namespace es {
                 std::vector<json> GetSceneItemList(obs_scene_t *scene, bool basic = false);
                 std::vector<json> GetTransitionList();
                 std::vector<json> GetInputList();
+                std::vector<json> GetOutputList();
                 std::vector<json> GetInputByKindList(std::string inputKind = "");
                 std::vector<std::string> GetInputKindList(bool unversioned = false, bool includeDisabled = false);
                 std::vector<json> GetMicsList();
