@@ -11,6 +11,7 @@
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#include <winuser.h>
 #include <TlHelp32.h>
 #include <Psapi.h>
 #include <locale>
@@ -131,10 +132,10 @@ HWND getHWNDfromTitle(std::string title)
 {
 	HWND hwnd = NULL;
 
-	std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-	std::wstring wTitle = converter.from_bytes(title);
 
-	hwnd = FindWindowEx(NULL, NULL, NULL, wTitle.c_str());
+	const char *lp = str.c_str();
+
+	hwnd = FindWindowEx(NULL, NULL, NULL, lp.c_str());
 	return hwnd;
 }
 
