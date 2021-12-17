@@ -217,15 +217,16 @@ endif()
 if(APPLE)
     find_library(COCOA Cocoa)
     include_directories(${COCOA})
-    set(PLUGIN_SOURCES
+    set(PLUGIN_SOURCES_APPLE
         src/utils/WindowMacOS.mm)
     set_source_files_properties(src/utils/WindowMacOS.mm
                             PROPERTIES COMPILE_FLAGS "-fobjc-arc")
-    target_link_libraries(${CMAKE_PROJECT_NAME} ${COCOA})
 
+    add_library(${CMAKE_PROJECT_NAME} MODULE ${PLUGIN_SOURCES_APPLE})
+    
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++ -fvisibility=default")
-
+    
 	set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES PREFIX "")
-	target_link_libraries(${CMAKE_PROJECT_NAME} "${OBS_FRONTEND_LIB}")
+	target_link_libraries(${CMAKE_PROJECT_NAME} "${OBS_FRONTEND_LIB}" ${COCOA})
 endif()
 # -- End of section --
