@@ -91,7 +91,7 @@ jobs:
           7z x boost.zip -o"${{ github.workspace }}/cmbuild/boost_install"
           cd "${{ github.workspace }}/cmbuild/boost_install"
           bootstrap.bat
-          b2.exe" install prefix="${{ github.workspace }}/cmbuild/boost"
+          b2.exe install prefix="${{ github.workspace }}/cmbuild/boost"
       - name: "Restore pre-built dependencies from cache"
         id: deps-cache
         uses: actions/cache@v2.1.2
