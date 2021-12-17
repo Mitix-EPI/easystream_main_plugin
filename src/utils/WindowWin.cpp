@@ -133,7 +133,7 @@ HWND getHWNDfromTitle(std::string title)
 	HWND hwnd = NULL;
 
 
-	const char *lp = str.c_str();
+	const char *lp = title.c_str();
 
 	hwnd = FindWindowEx(NULL, NULL, NULL, lp.c_str());
 	return hwnd;
@@ -217,7 +217,8 @@ void GetProcessList(QStringList &processes)
 	}
 
 	do {
-		QString tempexe = QString::fromWCharArray(procEntry.szExeFile);
+		std::string str(procEntry.szExeFile);
+		QString tempexe = QString::fromStdString(str);
 		if (tempexe == "System") {
 			continue;
 		}
