@@ -14,35 +14,15 @@
 namespace es {
     namespace utils {
         namespace window {
-            namespace stringHelper {
-                std::string GetWindowTitle(size_t i);
-                std::string GetCurrentWindowTitle();
-            }
+            std::string GetCurrentWindowTitle();
 
-            namespace enumHelper {
-            }
+            std::pair<int, int> GetCursorPos();
 
-            namespace numberHelper {
-                std::pair<int, int> GetCursorPos();
-            }
+            std::vector<std::string> GetWindowList();
 
-            namespace listHelper {
-                std::vector<Window> GetTopLevelWindows();
-                std::vector<std::string> GetWindowList();
-            }
-
-            namespace dataHelper {
-                QStringList GetStates(Window window);
-                bool IsMaximized(const std::string &title);
-                bool IsFullscreen(const std::string &title);
-                bool IsInFocus(const QString &executable);
-            }
-
-            namespace searchHelper {
-            }
-
-            namespace actionHelper {
-            }
+            bool IsMaximized(const std::string &title);
+            bool IsFullscreen(const std::string &title);
+            bool IsInFocus(const QString &executable);
         }
     }
 }

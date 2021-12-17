@@ -14,8 +14,6 @@
 #include "Json.hpp"
 #include "Obs.hpp"
 #include "Thread.hpp"
-#ifdef _LINUX 
-    #include "Window.hpp"
-#endif
+#include "Window.hpp"
 
 #endif /* !UTILS_HPP_ */
