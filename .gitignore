@@ -38,6 +38,7 @@ ci/windows/build
 ci/*.generated.*
 CMakeFiles
 installer/*.generated.*
+src/*.generated.*
 *.tar.gz
 
 cmake_install.cmake
