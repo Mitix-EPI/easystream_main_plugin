@@ -193,7 +193,7 @@ endif()
 # --- Linux-specific build settings and tasks ---
 if(UNIX OR APPLE)
     if(${CMAKE_BUILD_TYPE} STREQUAL Debug)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Og")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Og -g3")
     else()
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
     endif()
