@@ -100,9 +100,9 @@ void es::server::AsioTcpServer::setVolumeToMic(const nlohmann::json &j, boost::s
 
     auto tmp = _audioLeveler.find(j["args"]["micId"]);
     if (tmp == _audioLeveler.end()) {
-        std::string tmpJ = j["micId"];
+        // std::string tmpJ = j["micId"];
         toSend["statusCode"] = 404;
-        toSend["message"] = tmpJ + " not found";
+        toSend["message"] = " not found";
     } else {
         float level = (value * 60) / 100;
         level -= 60;

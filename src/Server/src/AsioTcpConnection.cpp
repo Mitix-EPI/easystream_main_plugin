@@ -45,6 +45,7 @@ void es::server::AsioTcpConnection::readMessage()
         else {
             std::cout << "[SERVER EASYSTREAM]: ERROR READING MESSAGE: " << ec.message() << std::endl;
             _connected = false;
+            return;
         }
         readMessage();
     });
