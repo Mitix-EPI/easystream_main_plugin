@@ -1,12 +1,12 @@
 /*
-** EassyStream EIP, 2021
-** easystream_main_plugin
-** File description:
-** common
+ EassyStream EIP, 2021
+ easystream_main_plugin
+ File description:
+ common
 */
 
-#ifndef COMMON_HPP_
-#define COMMON_HPP_
+#ifndef COMMONHPP
+#define COMMONHPP
 
 // Common C includes
 #include <cfloat>
@@ -19,11 +19,6 @@
 #include <cstring>
 #include <ctime>
 #include <cstddef>
-#include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdint.h>
 
 // Common C++ includes
 #include <algorithm>
@@ -43,8 +38,13 @@
 #include <condition_variable>
 #include <list>
 #include <thread>
-#include <string>
 #include <fstream>
+#include <sstream>
+
+// QT includes
+#include <QStringList>
+#include <QRegularExpression>
+#include <QLibrary>
 
 // Common OBS includes
 #include <obs-module.h>
@@ -53,16 +53,12 @@
 #include <util/platform.h>
 #include <util/config-file.h>
 #include <util/util_uint64.h>
-#include <media-io/audio-resampler.h>
 
-#define __FUNCTION_NAME__ __func__
+#define FUNCTION_NAME func
 
 // Common Files Includes
 #include "obs/Memory.hpp"
 #include "plugin-macros.generated.h"
 #include "Macros.hpp"
 
-
-#include <CaptionStream.h>
-
-#endif /* !COMMON_HPP_ */
+#endif /* !COMMONHPP */

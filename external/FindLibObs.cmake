@@ -2,12 +2,13 @@
 #
 # Once done these will be defined:
 #
-#  LIBOBS_FOUND
-#  LIBOBS_INCLUDE_DIRS
-#  LIBOBS_LIBRARIES
+# LIBOBS_FOUND
+# LIBOBS_INCLUDE_DIRS
+# LIBOBS_LIBRARIES
 
 find_package(PkgConfig QUIET)
-if (PKG_CONFIG_FOUND)
+
+if(PKG_CONFIG_FOUND)
 	pkg_check_modules(_OBS QUIET obs libobs)
 endif()
 
@@ -28,14 +29,14 @@ endif()
 find_path(LIBOBS_INCLUDE_DIR
 	NAMES obs.h
 	HINTS
-		ENV obsPath${_lib_suffix}
-		ENV obsPath
-		${obsPath}
+	ENV obsPath${_lib_suffix}
+	ENV obsPath
+	${obsPath}
 	PATHS
-		/usr/include /usr/local/include /opt/local/include /sw/include
+	/usr/include /usr/local/include /opt/local/include /sw/include /usr/include/obs
 	PATH_SUFFIXES
-		libobs
-	)
+	libobs
+)
 
 function(find_obs_lib base_name repo_build_path lib_name)
 	string(TOUPPER "${base_name}" base_name_u)
@@ -48,30 +49,32 @@ function(find_obs_lib base_name repo_build_path lib_name)
 	find_library(${base_name_u}_LIB
 		NAMES ${_${base_name_u}_LIBRARIES} ${lib_name} lib${lib_name}
 		HINTS
-			ENV obsPath${_lib_suffix}
-			ENV obsPath
-			${obsPath}
-			${_${base_name_u}_LIBRARY_DIRS}
+		ENV obsPath${_lib_suffix}
+		ENV obsPath
+		${obsPath}
+		${_${base_name_u}_LIBRARY_DIRS}
 		PATHS
-			/usr/lib /usr/local/lib /opt/local/lib /sw/lib
+		/usr/lib /usr/local/lib /opt/local/lib /sw/lib /usr/lib/x86_64-linux-gnu/obs-plugins
 		PATH_SUFFIXES
-			lib${_lib_suffix} lib
-			libs${_lib_suffix} libs
-			bin${_lib_suffix} bin
-			../lib${_lib_suffix} ../lib
-			../libs${_lib_suffix} ../libs
-			../bin${_lib_suffix} ../bin
-			# base repo non-msvc-specific search paths
-			${_build_type_${repo_build_path}}
-			${_build_type_${repo_build_path}${_lib_suffix}}
-			build/${repo_build_path}
-			build${_lib_suffix}/${repo_build_path}
-			# base repo msvc-specific search paths on windows
-			build${_lib_suffix}/${repo_build_path}/Debug
-			build${_lib_suffix}/${repo_build_path}/RelWithDebInfo
-			build/${repo_build_path}/Debug
-			build/${repo_build_path}/RelWithDebInfo
-		)
+		lib${_lib_suffix} lib
+		libs${_lib_suffix} libs
+		bin${_lib_suffix} bin
+		../lib${_lib_suffix} ../lib
+		../libs${_lib_suffix} ../libs
+		../bin${_lib_suffix} ../bin
+
+		# base repo non-msvc-specific search paths
+		${_build_type_${repo_build_path}}
+		${_build_type_${repo_build_path}${_lib_suffix}}
+		build/${repo_build_path}
+		build${_lib_suffix}/${repo_build_path}
+
+		# base repo msvc-specific search paths on windows
+		build${_lib_suffix}/${repo_build_path}/Debug
+		build${_lib_suffix}/${repo_build_path}/RelWithDebInfo
+		build/${repo_build_path}/Debug
+		build/${repo_build_path}/RelWithDebInfo
+	)
 endfunction()
 
 find_obs_lib(LIBOBS libobs obs)
@@ -86,8 +89,8 @@ mark_as_advanced(LIBOBS_INCLUDE_DIR LIBOBS_LIB)
 
 if(LIBOBS_FOUND)
 	if(MSVC)
-		if (NOT DEFINED W32_PTHREADS_LIB)
-			message(FATAL_ERROR "Could not find the w32-pthreads library" )
+		if(NOT DEFINED W32_PTHREADS_LIB)
+			message(FATAL_ERROR "Could not find the w32-pthreads library")
 		endif()
 
 		set(W32_PTHREADS_INCLUDE_DIR ${LIBOBS_INCLUDE_DIR}/../deps/w32-pthreads)
@@ -103,5 +106,5 @@ if(LIBOBS_FOUND)
 		set(INCLUDED_LIBOBS_CMAKE_MODULES true)
 	endif()
 else()
-	message(FATAL_ERROR "Could not find the libobs library" )
+	message(FATAL_ERROR "Could not find the libobs library")
 endif()

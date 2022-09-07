@@ -17,7 +17,8 @@ void test(std::shared_ptr<void>)
 	if (source)
 	{
 		es::obs::SpeechRecognition r(source);
-		while (1);
+		while (1)
+			;
 	}
 	blog(LOG_INFO, "[Thread::ThreadPool]: Thread finish");
 }
@@ -43,7 +44,7 @@ void obs_module_unload()
 	blog(LOG_INFO, "plugin unloaded");
 }
 
-os_cpu_usage_info_t* GetCpuUsageInfo()
+os_cpu_usage_info_t *GetCpuUsageInfo()
 {
 	return cpuUsageInfo;
 }
