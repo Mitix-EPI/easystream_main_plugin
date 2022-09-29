@@ -54,7 +54,13 @@
 #include <util/config-file.h>
 #include <util/util_uint64.h>
 
-#define FUNCTION_NAME func
+#ifndef __FUNCTION_NAME__
+#ifdef WIN32 // WINDOWS
+#define __FUNCTION_NAME__ __FUNCTION__
+#else //*NIX
+#define __FUNCTION_NAME__ __func__
+#endif
+#endif
 
 // Common Files Includes
 #include "obs/Memory.hpp"

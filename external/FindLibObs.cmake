@@ -33,9 +33,9 @@ find_path(LIBOBS_INCLUDE_DIR
 	ENV obsPath
 	${obsPath}
 	PATHS
-	/usr/include /usr/local/include /opt/local/include /sw/include /usr/include/obs
+	/usr/include /usr/local/include /opt/local/include /sw/include /usr/include/obs /usr/lib/x86_64-linux-gnu
 	PATH_SUFFIXES
-	libobs
+	libobs libobs.so
 )
 
 function(find_obs_lib base_name repo_build_path lib_name)

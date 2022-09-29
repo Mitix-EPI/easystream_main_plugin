@@ -26,7 +26,6 @@ es::obs::AutoAudioLeveler::~AutoAudioLeveler()
 
 void es::obs::AutoAudioLeveler::InputAudioCaptureCallback(void *priv_data, obs_source_t *source, const struct audio_data *data, bool muted)
 {
-	static int count = 0;
 	AutoAudioLeveler *autoAudioLeveler = static_cast<es::obs::AutoAudioLeveler *>(priv_data);
 
 	float inputAudioLevel = autoAudioLeveler->CalculateAudioLevel(data, muted);

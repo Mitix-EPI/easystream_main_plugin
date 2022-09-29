@@ -31,6 +31,7 @@
 *.out
 *.app
 
+tmp_comp.sh
 build*
 ci/linux/build
 ci/macos/build

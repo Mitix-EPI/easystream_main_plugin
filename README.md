@@ -37,7 +37,7 @@ mkdir build && cd build
 cmake ..
 # If dependencies are not on your path, you can manually specify their paths with the following:
 cmake -DQTDIR=<path to Qt dir> -DLIBOBS_INCLUDE_DIR=<path to the libobs sub-folder in obs-studio's source code> -DLIBOBS_LIB=<path to libobs.so> -DOBS_FRONTEND_LIB=<path to libobs-frontend-api.so> ..
-make
+/usr/lib/x86_64-linux-gnumake
 sudo make install
 ```
 

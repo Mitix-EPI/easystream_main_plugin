@@ -93,20 +93,20 @@ es::obs::SpeechRecognition::SpeechRecognition(obs_source_t *input) : _source(inp
         sizeof(WaveFileMetadata));
     delete wav_metadata;
 
-    resample_info resample_to = {16000, AUDIO_FORMAT_16BIT, SPEAKERS_MONO};
-    bytes_per_channel = get_audio_bytes_per_channel(resample_to.format);
+    // resample_info resample_to = {16000, AUDIO_FORMAT_16BIT, SPEAKERS_MONO};
+    // bytes_per_channel = get_audio_bytes_per_channel(resample_to.format);
 
-    if (obs_audio->samples_per_sec != resample_to.samples_per_sec || obs_audio->format != resample_to.format || obs_audio->speakers != resample_to.speakers)
-    {
-        resample_info src = {
-            obs_audio->samples_per_sec,
-            obs_audio->format,
-            obs_audio->speakers};
+    // if (obs_audio->samples_per_sec != resample_to.samples_per_sec || obs_audio->format != resample_to.format || obs_audio->speakers != resample_to.speakers)
+    // {
+    //     resample_info src = {
+    //         obs_audio->samples_per_sec,
+    //         obs_audio->format,
+    //         obs_audio->speakers};
 
-        this->resampler = audio_resampler_create(&resample_to, &src);
-        if (!this->resampler)
-            throw std::string("Failed to create audio resampler");
-    }
+    //     this->resampler = audio_resampler_create(&resample_to, &src);
+    //     if (!this->resampler)
+    //         throw std::string("Failed to create audio resampler");
+    // }
 
     blog(LOG_INFO, "[es::Obs::SpeechRecognition] Speech recognition for input: %s", obs_source_get_name(_source));
     obs_source_add_audio_capture_callback(_source, InputAudioCaptureCallback, this);
@@ -136,29 +136,30 @@ void es::obs::SpeechRecognition::InputAudioCaptureCallback(void *priv_data, obs_
     unsigned int size = 0;
     std::string *str = nullptr;
 
-    if (!self->resampler)
-    {
-        uint8_t *out[MAX_AV_PLANES];
-        memset(out, 0, sizeof(out));
+    // if (!self->resampler)
+    // {
+    //     uint8_t *out[MAX_AV_PLANES];
+    //     memset(out, 0, sizeof(out));
 
-        uint32_t out_frames;
-        uint64_t ts_offset;
+    //     uint32_t out_frames;
+    //     uint64_t ts_offset;
 
-        bool success = audio_resampler_resample(self->resampler, out, &out_frames, &ts_offset, (const uint8_t *const *)data->data, data->frames);
-        if (!success || !out[0])
-        {
-            blog(LOG_INFO, "failed resampling audio data");
-            return;
-        }
+    //     bool success = audio_resampler_resample(self->resampler, out, &out_frames, &ts_offset, (const uint8_t *const *)data->data, data->frames);
+    //     if (!success || !out[0])
+    //     {
+    //         blog(LOG_INFO, "failed resampling audio data");
+    //         return;
+    //     }
 
-        size = out_frames * get_audio_bytes_per_channel((audio_format)self->bytes_per_channel);
-        str = new std::string((char *)out[0], size);
-    }
-    else
-    {
-        size = data->frames * get_audio_bytes_per_channel((audio_format)self->bytes_per_channel);
-        str = new std::string((char *)data->data[0], size);
-    }
+    //     size = out_frames * get_audio_bytes_per_channel((audio_format)self->bytes_per_channel);
+    //     str = new std::string((char *)out[0], size);
+    // }
+    // else
+    // {
+    size = data->frames * get_audio_bytes_per_channel((audio_format)self->bytes_per_channel);
+    str = new std::string((char *)data->data[0], size);
+
+    // }
     self->output.push_back(str);
     double secs_since_last_caption = std::chrono::duration_cast<std::chrono::duration<double>>(
                                          std::chrono::steady_clock::now() - self->last_caption_at)
@@ -183,7 +184,6 @@ void es::obs::SpeechRecognition::InputAudioCaptureCallback(void *priv_data, obs_
         // self->myfile << std::hex << s << "\r\n";
         for (auto &n : self->output)
             self->myfile << *n;
-        // self->myfile << "\r\n";
 
         uint32_t postAudioPos = self->myfile.tellp();
         blog(LOG_INFO, "[FILE WRITING] - Position after writing audio : %d", postAudioPos);
