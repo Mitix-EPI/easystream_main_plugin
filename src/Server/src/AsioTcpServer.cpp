@@ -130,7 +130,18 @@ void es::server::AsioTcpServer::setSceneSwapTrigger(const nlohmann::json &j, boo
     json toSend;
     int j_trigger_type = j["args"]["triggerType"];
     auto j_trigger_value = std::string(j["args"]["triggerValue"]);
-    auto j_target_scene = std::string(j["args"]["targetScene"]);
+    auto j_target_scene_name = std::string(j["args"]["targetScene"]);
+
+    // Find target scene
+    bool target_scene_found = false;
+    for (const auto scene : es::utils::obs::listHelper::GetSceneList())
+    {
+        if (j_target_scene_name == std::string(scene["sceneName"]))
+        {
+            target_scene_found = true;
+            break;
+        }
+    }
 
     // Check if type in TriggerType enum values
     if (j["args"]["triggerType"] < 0 || j["args"]["triggerType"] > 1)
@@ -138,9 +149,10 @@ void es::server::AsioTcpServer::setSceneSwapTrigger(const nlohmann::json &j, boo
         toSend["statusCode"] = 404;
         toSend["message"] = std::string("Trigger type not found");
     }
-    else if (false)
+    else if (target_scene_found)
     {
-        // Check if j_trigger_value & j_target_scene are valid
+        toSend["statusCode"] = 404;
+        toSend["message"] = std::string("Target scene not found");
     }
     else // Request is valid
     {
