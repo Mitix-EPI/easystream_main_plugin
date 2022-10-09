@@ -72,7 +72,7 @@ void es::server::AsioTcpServer::update()
         if (_requests.empty())
             continue;
         for (const auto &req: _requests)
-            (this->*_handler[req["command"]])(req, con); 
+            (this->*_handler[req["command"]])(req, con);
     }
 }
 
@@ -113,6 +113,8 @@ void es::server::AsioTcpServer::setVolumeToMic(const nlohmann::json &j, boost::s
     }
     con->writeMessage(toSend.dump());
 }
+
+
 
 
 // 60 -> 100

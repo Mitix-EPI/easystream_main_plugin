@@ -42,6 +42,7 @@ namespace es {
                 boost::asio::ip::tcp::endpoint _endPoint;
                 boost::asio::io_context _ioContext;
                 boost::asio::ip::tcp::acceptor _acceptor;
+                // std::vector<std::string>
         };
     }
 }

@@ -37,7 +37,7 @@ if (WIN32)
 endif()
 
 find_package(LibObs REQUIRED)
-find_package(Qt5 REQUIRED COMPONENTS Core Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
 find_package(Boost COMPONENTS thread date_time program_options filesystem system REQUIRED)
 
 if(NOT CMAKE_BUILD_TYPE)
@@ -76,7 +76,7 @@ set(PLUGIN_HEADERS
 if(APPLE)
   find_library(COCOA Cocoa)
   if(BUILD_OUT_OF_TREE)
-    find_package(Qt5MacExtras REQUIRED)
+    find_package(Qt6MacExtras REQUIRED)
   endif()
   include_directories(${COCOA})
 endif()
@@ -101,15 +101,15 @@ add_library(${CMAKE_PROJECT_NAME} MODULE ${PLUGIN_SOURCES} ${PLUGIN_HEADERS} ${o
 
 include_directories(
 	"${LIBOBS_INCLUDE_DIR}/../UI/obs-frontend-api"
-	${Qt5Core_INCLUDES}
-	${Qt5Widgets_INCLUDES}
+	${Qt6Core_INCLUDES}
+	${Qt6Widgets_INCLUDES}
 )
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
     ${obs_main_plugin_PLATFORM_LIBS}
 	libobs
-	Qt5::Core
-	Qt5::Widgets
+	Qt6::Core
+	Qt6::Widgets
     Boost::system
     Boost::thread
 )
@@ -235,7 +235,7 @@ if(UNIX AND NOT APPLE)
 
     if(${BUILD_UBUNTU})
         install(TARGETS ${CMAKE_PROJECT_NAME}
-            LIBRARY DESTINATION "/usr/lib/obs-plugins")
+            LIBRARY DESTINATION "/usr/local/lib/obs-plugins")
         install(FILES ${locale_files}
             DESTINATION "/usr/share/obs/obs-plugins/${CMAKE_PROJECT_NAME}/locale")
     else()
