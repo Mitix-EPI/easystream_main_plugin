@@ -55,6 +55,7 @@ void es::server::AsioTcpConnection::writeMessage(const std::string &msg)
 {
     char buffer[MSGMAX];
 
+    std::cout << "0" << std::endl;
     std::memset(buffer, 0, MSGMAX);
     std::memcpy(buffer, msg.data(), msg.size());
     boost::asio::async_write(_socket, boost::asio::buffer(buffer, MSGMAX), [this](boost::system::error_code ec, std::size_t length) {

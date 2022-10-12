@@ -25,6 +25,8 @@ set(CMAKE_AUTOUIC ON)
 # In case you need C++
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_FLAGS "-fprofile-arcs -ftest-coverage")
+set(CMAKE_CXX_LINKER_FLAGS "-lgcov")
 
 if (WIN32 OR APPLE)
     include(external/FindLibObs.cmake)
@@ -67,10 +69,13 @@ configure_file(
 )
 
 file(GLOB_RECURSE PLUGIN_SOURCES src/*.cpp)
+file(GLOB_RECURSE TEST_SOURCES Tests/*.cpp)
+
 
 set(PLUGIN_HEADERS
 	src/plugin-macros.generated.h)
 
+include_directories(${CMAKE_SOURCE_DIR}/Tests/include)
 # --- Platform-specific settings ---
 
 if(APPLE)
@@ -99,6 +104,11 @@ endif()
 # --- Platform-independent build settings ---
 add_library(${CMAKE_PROJECT_NAME} MODULE ${PLUGIN_SOURCES} ${PLUGIN_HEADERS} ${obs_main_plugin_PLATFORM_SOURCES})
 
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
+
+enable_testing()
+
 include_directories(
 	"${LIBOBS_INCLUDE_DIR}/../UI/obs-frontend-api"
 	${Qt6Core_INCLUDES}
@@ -113,6 +123,17 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     Boost::system
     Boost::thread
 )
+
+add_executable(ServerTests ${TEST_SOURCES})
+target_link_libraries(ServerTests
+    Boost::system
+    Boost::thread
+    GTest::gtest_main
+    pthread
+)
+
+include(GoogleTest)
+gtest_discover_tests(ServerTests)
 
 # --- End of section ---
 

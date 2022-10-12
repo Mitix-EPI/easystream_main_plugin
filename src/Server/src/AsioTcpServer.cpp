@@ -41,8 +41,10 @@ void es::server::AsioTcpServer::waitForClientConnection()
             json tmpJson;
 
             _connections.back()->readMessage();
-            tmpJson["socketNumber"] = _connections.back()->getSocket().remote_endpoint().address().to_string();
+            tmpJson["socketAdress"] = _connections.back()->getSocket().remote_endpoint().address().to_string();
+            tmpJson["socketPort"] = _connections.back()->getSocket().remote_endpoint().port();
             tmpJson["Message"] = std::string("succesfully connected");
+            tmpJson["statusCode"] = 200; 
             _connections.back()->writeMessage(tmpJson.dump());
         } else {
             std::cout << "[SERVER EASYSTREAM] connection denied: " << ec.message() << std::endl;
@@ -71,8 +73,12 @@ void es::server::AsioTcpServer::update()
         std::vector<nlohmann::json> _requests = con->getMessage();
         if (_requests.empty())
             continue;
-        for (const auto &req: _requests)
-            (this->*_handler[req["command"]])(req, con);
+        for (const auto &req: _requests) {
+            if (_handler.find(req["command"]) != _handler.end())
+                (this->*_handler[req["command"]])(req, con);
+            else
+                badCommand(con);
+        }
     }
 }
 
@@ -114,12 +120,10 @@ void es::server::AsioTcpServer::setVolumeToMic(const nlohmann::json &j, boost::s
     con->writeMessage(toSend.dump());
 }
 
-
-
-
-// 60 -> 100
-// 0
-
-
-//-40 + 60
-//
+void es::server::AsioTcpServer::badCommand(boost::shared_ptr<AsioTcpConnection> &con)
+{
+    nlohmann::json toSend;
+    toSend["statusCode"] = 404;
+    toSend["message"] = "The requested action does not exist";
+    con->writeMessage(toSend.dump());
+}

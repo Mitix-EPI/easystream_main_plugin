@@ -35,6 +35,7 @@ namespace es {
                 void getAllEvents(const nlohmann::json &, boost::shared_ptr<AsioTcpConnection> &);
                 void setVolumeToMic(const nlohmann::json &, boost::shared_ptr<AsioTcpConnection> &);
                 void waitForClientConnection();
+                void badCommand(boost::shared_ptr<AsioTcpConnection> &);
                 const std::unordered_map<std::string, std::shared_ptr<obs::AutoAudioLeveler>> &_audioLeveler;
                 std::unordered_map<std::string, void (AsioTcpServer::*)(const nlohmann::json &, boost::shared_ptr<AsioTcpConnection> &)> _handler;
                 std::vector<boost::shared_ptr<AsioTcpConnection>> _connections;
