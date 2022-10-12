@@ -158,7 +158,7 @@ void es::server::AsioTcpServer::setSceneSwapTrigger(const nlohmann::json &j, boo
     {
         auto triggerInstruction = st_instruction_t({TriggerType(j_trigger_type),
                                                     j_trigger_value,
-                                                    j_target_scene});
+                                                    j_target_scene_name});
         this->_sceneSwapTriggers.push_back(triggerInstruction);
 
         blog(
