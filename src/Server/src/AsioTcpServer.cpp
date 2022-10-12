@@ -80,7 +80,8 @@ void es::server::AsioTcpServer::update()
         std::vector<nlohmann::json> _requests = con->getMessage();
         if (_requests.empty())
             continue;
-        for (const auto &req: _requests) {
+        for (const auto &req : _requests)
+        {
             if (_handler.find(req["command"]) != _handler.end())
                 (this->*_handler[req["command"]])(req, con);
             else
@@ -138,6 +139,7 @@ void es::server::AsioTcpServer::badCommand(boost::shared_ptr<AsioTcpConnection> 
     toSend["message"] = "The requested action does not exist";
     con->writeMessage(toSend.dump());
 }
+
 void es::server::AsioTcpServer::setSceneSwapTrigger(const nlohmann::json &j, boost::shared_ptr<AsioTcpConnection> &con)
 {
     json toSend;
@@ -146,12 +148,12 @@ void es::server::AsioTcpServer::setSceneSwapTrigger(const nlohmann::json &j, boo
     auto j_target_scene_name = std::string(j["args"]["targetScene"]);
 
     // Find target scene
-    bool target_scene_found = false;
+    bool target_scene_not_found = false; // @dev (Romain) : Hidden stuff
     for (const auto scene : es::utils::obs::listHelper::GetSceneList())
     {
         if (j_target_scene_name == std::string(scene["sceneName"]))
         {
-            target_scene_found = true;
+            target_scene_not_found = true;
             break;
         }
     }
@@ -162,7 +164,7 @@ void es::server::AsioTcpServer::setSceneSwapTrigger(const nlohmann::json &j, boo
         toSend["statusCode"] = 404;
         toSend["message"] = std::string("Trigger type not found");
     }
-    else if (target_scene_found)
+    else if (target_scene_not_found)
     {
         toSend["statusCode"] = 404;
         toSend["message"] = std::string("Target scene not found");
