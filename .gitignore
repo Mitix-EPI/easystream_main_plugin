@@ -39,6 +39,7 @@ ci/*.generated.*
 CMakeFiles
 installer/*.generated.*
 *.tar.gz
+tmp_comp.sh
 
 cmake_install.cmake
 CMakeCache.txt
@@ -68,6 +69,6 @@ ci/obs-studio
 # Support for Project snippet scope
 !.vscode/*.code-snippets
 
-.vscode
+.vscode/*
 
 tmp.txt
