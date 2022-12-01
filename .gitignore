@@ -70,5 +70,6 @@ ci/obs-studio
 !.vscode/*.code-snippets
 
 .vscode/*
-
+test2
+waveform2.wav
 tmp.txt
