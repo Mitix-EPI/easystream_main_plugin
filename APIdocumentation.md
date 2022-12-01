@@ -42,10 +42,10 @@
     }
     ```
 
-    Une action est constituée de 3 éléments:
-        * un nom (`string`)
-        * un type (un `integer` correspondant au type de l'action)
-        * un paramètre (`integer`).
+    Une action est constituée de 3 éléments:  
+        - un nom (`string`)  
+        - un type (un `integer` correspondant au type de l'action)  
+        - un paramètre (`integer`)
 
     * `actionData`
     ```json
@@ -84,7 +84,7 @@
 ---
 * `setAutoAudioLeveler`  
 
-    * **Description**
+    * **Description**  
     Activation / désactivation la gestion de volume automatique sur une entrée audio.
 
     * **Request**
