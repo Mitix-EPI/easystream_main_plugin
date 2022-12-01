@@ -49,11 +49,11 @@ namespace es
             ASSERT_EQ(toSend["statusCode"], 200);
             ASSERT_EQ(toSend["length"], 2);
         }
-        // TEST_F(ServerTest, TestServerReceivingAndResponse) {
+        // TEST_F(ServerTest, TestSetMicsWrongMics) {
         //     _client.connect();
         //     std::this_thread::sleep_for(std::chrono::milliseconds(500));
         //     nlohmann::json result = _client.readMessage();
-        //     ASSERT_EQ(result["statusCode"], 200);
+        //     ASSERT_EQ(result["statusCode"], 404);
         // }
         // TEST_F(ServerTest, TestGetallMics) {
         //     _client.connect();
@@ -113,6 +113,18 @@ namespace es
             ASSERT_EQ(result["statusCode"], 404);
             ASSERT_EQ(result["message"], "Trigger type not found");
         }
+        // TEST_F(ServerTest, TestBadScene) {
+        //     _client.connect();
+        //     std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        //     nlohmann::json result = _client.readMessage();
+        //     ASSERT_EQ(result["statusCode"], 200);
+        //     nlohmann::json toSend;
+        //     toSend["command"] = "setSceneSwapTrigger";
+        //     _client.sendMessage(toSend.dump());
+        //     std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        //     result = _client.readMessage();
+        //     ASSERT_EQ(result["statusCode"], 404);
+        // }
         // TEST_F(ServerTest, TestTooLongMessage) {
         //     char buffer[MSGMAX];
         //     std::memset(buffer, 0, 101);
