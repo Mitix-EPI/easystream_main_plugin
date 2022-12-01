@@ -188,23 +188,3 @@ ___
         "message": "string"
     }
     ```
-
-
-
-updateActions
-	description: Mets à jour les actions. (notamment pour supprimer des actions
-	format d’émission:
-
-   {
-     actions: [
-		{
-			name: “Turn on the live”,
-			action: 4,
-			parameter: 4
-		},
-		...
-]
-   },
-
-	format de réception: peu importe. juste un sucess.
-
