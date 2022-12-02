@@ -43,6 +43,19 @@ jobs:
             gcc-multilib \
             git \
             wget \
+            libpipewire-0.3-dev \
+            libc-dev-bin \
+	          libc6-dev git \
+	          build-essential \
+	          checkinstall \
+	          cmake \
+	          obs-studio \
+	          qt6-base-dev \
+	          libboost-all-dev \
+	          libasio-dev \
+	          libxss-dev \
+	          libxtst-dev	\
+	          libboost-all-dev \
       - name: OBS deps
         run: ./ci/linux/install-dependencies-ubuntu.sh
       - name: Compile
