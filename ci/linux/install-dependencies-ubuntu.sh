@@ -36,6 +36,7 @@ chmod +x build-linux.sh
 ./build-linux.sh --build-dir ../obsBuildDir
 cd ../../obsBuildDir
 sudo cmake -P cmake_install.cmake
+sudo cp /usr/local/lib/cmake/libobs/libobsConfig.cmake /usr/local/lib/cmake/libobs/LibObsConfig.cmake
 # cd ../UI/obs-frontend-api/ &&
 # sudo cmake -P cmake_install.cmake &&
 # pwd &&
