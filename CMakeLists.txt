@@ -27,6 +27,45 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "-fprofile-arcs -ftest-coverage")
 set(CMAKE_CXX_LINKER_FLAGS "-lgcov")
 
+# set(LibObs_DIR "${CMAKE_SOURCE_DIR}/../obsBuildDir/libobs")
+if (UNIX) 
+    set(LibObs_DIR "/usr/local/lib/cmake/libobs")
+    include_directories("/usr/local/include/obs")
+endif()
+
+# MACRO(HEADER_DIRECTORIES_H return_list)
+#     FILE(GLOB_RECURSE new_list "${CMAKE_SOURCE_DIR}/../obs-studio/libobs/*.h")
+#     SET(dir_list "")
+#     FOREACH(file_path ${new_list})
+#         GET_FILENAME_COMPONENT(dir_path ${file_path} PATH)
+#         SET(dir_list ${dir_list} ${dir_path})
+#     ENDFOREACH()
+#     LIST(REMOVE_DUPLICATES dir_list)
+#     SET(${return_list} ${dir_list})
+# ENDMACRO()
+
+# MACRO(HEADER_DIRECTORIES_HPP return_list)
+#     FILE(GLOB_RECURSE new_list "${CMAKE_SOURCE_DIR}/../obs-studio/libobs/*.hpp")
+#     SET(dir_list "")
+#     FOREACH(file_path ${new_list})
+#         GET_FILENAME_COMPONENT(dir_path ${file_path} PATH)
+#         SET(dir_list ${dir_list} ${dir_path})
+#     ENDFOREACH()
+#     LIST(REMOVE_DUPLICATES dir_list)
+#     SET(${return_list} ${dir_list})
+# ENDMACRO()
+
+# set(cHeader "")
+# set(cppHeader "")
+
+# HEADER_DIRECTORIES_H(cHeader)
+# HEADER_DIRECTORIES_HPP(cppHeader)
+
+# list(LENGTH cHeader cHeader_count)
+# message(STATUS "[INFO] Found ${cHeader_count} header directories.")
+# list(LENGTH cppHeader cppHeader_count)
+# message(STATUS "[INFO] Found ${cppHeader_count} header directories.")
+
 if(WIN32 OR APPLE)
     include(external/FindLibObs.cmake)
 endif()
@@ -40,6 +79,7 @@ endif()
 find_package(LibObs REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
 find_package(Boost COMPONENTS thread date_time program_options filesystem system REQUIRED)
+
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
@@ -104,36 +144,36 @@ endif()
 # --- Platform-independent build settings ---
 add_library(${CMAKE_PROJECT_NAME} MODULE ${PLUGIN_SOURCES} ${PLUGIN_HEADERS} ${obs_main_plugin_PLATFORM_SOURCES})
 
-find_package(GTest REQUIRED)
-include_directories(${GTEST_INCLUDE_DIRS})
+# find_package(GTest REQUIRED)
+# include_directories(${GTEST_INCLUDE_DIRS})
 
-enable_testing()
+# enable_testing()
 
-include_directories(
-    "${LIBOBS_INCLUDE_DIR}/../UI/obs-frontend-api"
-    ${Qt6Core_INCLUDES}
-    ${Qt6Widgets_INCLUDES}
-)
+# include_directories(
+#     "${LIBOBS_INCLUDE_DIR}/../UI/obs-frontend-api"
+#     ${Qt6Core_INCLUDES}
+#     ${Qt6Widgets_INCLUDES}
+# )
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
     ${obs_main_plugin_PLATFORM_LIBS}
-    libobs
+    # libobs
     Qt6::Core
     Qt6::Widgets
     Boost::system
     Boost::thread
 )
 
-add_executable(ServerTests ${TEST_SOURCES})
-target_link_libraries(ServerTests
-    Boost::system
-    Boost::thread
-    GTest::gtest_main
-    pthread
-)
+# add_executable(ServerTests ${TEST_SOURCES})
+# target_link_libraries(ServerTests
+#     Boost::system
+#     Boost::thread
+#     GTest::gtest_main
+#     pthread
+# )
 
-include(GoogleTest)
-gtest_discover_tests(ServerTests)
+# include(GoogleTest)
+# gtest_discover_tests(ServerTests)
 
 # --- End of section ---
 
@@ -260,7 +300,8 @@ if(UNIX AND NOT APPLE)
 
     if(${BUILD_UBUNTU})
         install(TARGETS ${CMAKE_PROJECT_NAME}
-            LIBRARY DESTINATION "/usr/local/lib/obs-plugins")
+            # LIBRARY DESTINATION "/usr/local/lib/obs-plugins")
+            LIBRARY DESTINATION "/usr/lib/x86_64-linux-gnu/obs-plugins")
         install(FILES ${locale_files}
             DESTINATION "/usr/share/obs/obs-plugins/${CMAKE_PROJECT_NAME}/locale")
     else()
