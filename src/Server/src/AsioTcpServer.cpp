@@ -7,8 +7,6 @@
 
 #include "../include/AsioTcpServer.hpp"
 
-using nlohmann::json;
-
 namespace es::server
 {
     AsioTcpServer::AsioTcpServer(const std::string &host, int port, const std::unordered_map<std::string, std::shared_ptr<obs::AutoAudioLeveler>> &_mps) : _audioLeveler(_mps), _endPoint(boost::asio::ip::make_address(host), port), _acceptor(_ioContext, _endPoint)
@@ -16,7 +14,7 @@ namespace es::server
         /* Getters */
         _handler["getAllMics"] = &AsioTcpServer::getAllMics;
         // _handler["getActions"]
-        // _handler["getWodDetections"]
+        // _handler["getWordDetections"]
 
         /* Setters */
         _handler["setAutoAudioLeveler"] = &AsioTcpServer::setAutoAudioLeveler;
@@ -63,7 +61,7 @@ namespace es::server
                     json tmpJson;
 
                     std::cout << "[SERVER EASYSTREAM] new connection detected " << sock.remote_endpoint() << std::endl;
-                    _connections.push_back(boost::make_shared<AsioTcpConnection>(sock));
+                    _connections.push_back(CreateShared<AsioTcpConnection>(sock));
 
                     _connections.back()->readMessage();
                     tmpJson["socketAdress"] = _connections.back()->getSocket().remote_endpoint().address().to_string();
@@ -95,7 +93,7 @@ namespace es::server
             std::remove_if(
                 this->_connections.begin(),
                 this->_connections.end(),
-                [this](const boost::shared_ptr<AsioTcpConnection> con)
+                [this](const Shared<AsioTcpConnection> con)
                 {
                     return (!con->isConnected());
                 }),
@@ -104,7 +102,7 @@ namespace es::server
         // Treat requests
         for (auto &con : this->_connections)
         {
-            std::vector<nlohmann::json> requests_ = con->getMessage();
+            std::vector<json> requests_ = con->getMessage();
 
             if (requests_.empty()) // @dev (Romain) : Is necessary ?
             {
@@ -133,7 +131,7 @@ namespace es::server
     /* GET REQUESTS */
     /****************/
 
-    void AsioTcpServer::getAllMics(const nlohmann::json &j, boost::shared_ptr<AsioTcpConnection> &con)
+    void AsioTcpServer::getAllMics(const json &j, Shared<AsioTcpConnection> &con)
     {
         json toSend;
         std::vector<json> mics = es::utils::obs::listHelper::GetMicsList();
@@ -158,12 +156,30 @@ namespace es::server
     /* SET REQUESTS */
     /****************/
 
-    void AsioTcpServer::setAutoAudioLeveler(const nlohmann::json &j, boost::shared_ptr<AsioTcpConnection> &con)
+    void AsioTcpServer::setAutoAudioLeveler(const json &j, Shared<AsioTcpConnection> &con)
     {
-        // Toggle audio leveler
+        json toSend;
+        json args_ = j["args"];
+        bool enable_ = args_["enable"];
+        auto source_ = this->_audioLeveler.find(args_["source"]);
+
+        if (source_ == this->_audioLeveler.end())
+        {
+            toSend["statusCode"] = 404;
+            toSend["message"] = std::string("Not found");
+        }
+        else if (enable_)
+        {
+            // enable
+        }
+        else
+        {
+            // disable
+        }
+        con->writeMessage(toSend.dump());
     }
 
-    void AsioTcpServer::setMicLevel(const nlohmann::json &j, boost::shared_ptr<AsioTcpConnection> &con)
+    void AsioTcpServer::setMicLevel(const json &j, Shared<AsioTcpConnection> &con)
     {
         json toSend;
         float value = j["args"]["value"];
@@ -186,7 +202,7 @@ namespace es::server
         con->writeMessage(toSend.dump());
     }
 
-    void AsioTcpServer::setSceneSwapTrigger(const nlohmann::json &j, boost::shared_ptr<AsioTcpConnection> &con)
+    void AsioTcpServer::setSceneSwapTrigger(const json &j, Shared<AsioTcpConnection> &con)
     {
         json toSend;
         int j_trigger_type = j["args"]["triggerType"];
@@ -240,9 +256,9 @@ namespace es::server
     /* BAD REQUESTS */
     /****************/
 
-    void AsioTcpServer::badCommand(boost::shared_ptr<AsioTcpConnection> &con)
+    void AsioTcpServer::badCommand(Shared<AsioTcpConnection> &con)
     {
-        nlohmann::json toSend;
+        json toSend;
 
         toSend["statusCode"] = 404;
         toSend["message"] = "The requested action does not exist";

@@ -9,10 +9,9 @@
 #define ASIOTCPSERVER_HPP_
 
 #include "IServer.hpp"
+#include "common_using.hpp"
 #include <thread>
-#include <boost/shared_ptr.hpp>
 #include <vector>
-#include <boost/make_shared.hpp>
 // #include <boost/thread.hpp>
 #include <boost/thread.hpp>
 #include <unordered_map>
@@ -61,16 +60,16 @@ namespace es::server
         void waitForClientConnection();
 
         // --- GET REQUESTS
-        void getAllMics(const nlohmann::json &, boost::shared_ptr<AsioTcpConnection> &);
-        void getAllEvents(const nlohmann::json &, boost::shared_ptr<AsioTcpConnection> &);
+        void getAllMics(const json &, Shared<AsioTcpConnection> &);
+        void getAllEvents(const json &, Shared<AsioTcpConnection> &);
 
         // --- SET REQUESTS
-        void setAutoAudioLeveler(const nlohmann::json &, boost::shared_ptr<AsioTcpConnection> &);
-        void setMicLevel(const nlohmann::json &, boost::shared_ptr<AsioTcpConnection> &);
-        void setSceneSwapTrigger(const nlohmann::json &, boost::shared_ptr<AsioTcpConnection> &);
+        void setAutoAudioLeveler(const json &, Shared<AsioTcpConnection> &);
+        void setMicLevel(const json &, Shared<AsioTcpConnection> &);
+        void setSceneSwapTrigger(const json &, Shared<AsioTcpConnection> &);
 
         // --- BAD REQUESTS
-        void badCommand(boost::shared_ptr<AsioTcpConnection> &);
+        void badCommand(Shared<AsioTcpConnection> &);
 
         /********************/
         /* Member variables */
@@ -82,9 +81,9 @@ namespace es::server
         boost::asio::ip::tcp::acceptor _acceptor;
         boost::asio::ip::tcp::endpoint _endPoint;
         boost::asio::io_context _ioContext;
-        std::vector<boost::shared_ptr<AsioTcpConnection>> _connections;
+        std::vector<Shared<AsioTcpConnection>> _connections;
         // --- Request handler vars
-        std::unordered_map<std::string, void (AsioTcpServer::*)(const nlohmann::json &, boost::shared_ptr<AsioTcpConnection> &)> _handler;
+        std::unordered_map<std::string, void (AsioTcpServer::*)(const json &, Shared<AsioTcpConnection> &)> _handler;
         std::vector<st_instruction_t> _sceneSwapTriggers;
         const std::unordered_map<std::string, std::shared_ptr<obs::AutoAudioLeveler>> &_audioLeveler;
     };
