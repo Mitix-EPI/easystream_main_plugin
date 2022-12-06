@@ -85,7 +85,6 @@ es::obs::SpeechRecognition::SpeechRecognition(obs_source_t *input) : _source(inp
     }
 
     blog(LOG_INFO, "[es::Obs::SpeechRecognition] - name : %s", obs_audio->name);
-    blog(LOG_INFO, "[es::Obs::SpeechRecognition] - sps : %d", obs_audio->sample_per_second);
     blog(LOG_INFO, "[es::Obs::SpeechRecognition] - format : %d", obs_audio->format);
     blog(LOG_INFO, "[es::Obs::SpeechRecognition] - speakers : %s", obs_audio->speakers);
 
