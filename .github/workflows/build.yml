@@ -95,11 +95,11 @@ jobs:
         with:
           path: ${{ github.workspace }}/cmbuild/deps
           key: ${{ runner.os }}-pr-${{ env.CACHE_NAME }}-${{ env.WINDOWS_DEPS_VERSION }}-${{ env.WINDOWS_DEPS_CACHE_VERSION }}
-      - name: "Install prerequisite: Pre-built dependencies"
-        if: steps.deps-cache.outputs.cache-hit != 'true'
-        run: |
-          curl -kLO https://cdn-fastly.obsproject.com/downloads/dependencies${{ env.WINDOWS_DEPS_VERSION }}.zip -f --retry 5 -C -
-          7z x dependencies${{ env.WINDOWS_DEPS_VERSION }}.zip -o"${{ github.workspace }}/cmbuild/deps"
+      # - name: "Install prerequisite: Pre-built dependencies"
+      #   if: steps.deps-cache.outputs.cache-hit != 'true'
+      #   run: |
+      #     curl -kLO https://cdn-fastly.obsproject.com/downloads/dependencies${{ env.WINDOWS_DEPS_VERSION }}.zip -f --retry 5 -C -
+      #     7z x dependencies${{ env.WINDOWS_DEPS_VERSION }}.zip -o"${{ github.workspace }}/cmbuild/deps"
       - name: "Build OBS"
         run: |
           git clone https://github.com/obsproject/obs-studio
@@ -162,11 +162,11 @@ jobs:
         with:
           path: ${{ github.workspace }}/cmbuild/deps
           key: ${{ runner.os }}-pr-${{ env.CACHE_NAME }}-${{ env.WINDOWS_DEPS_VERSION }}-${{ env.WINDOWS_DEPS_CACHE_VERSION }}
-      - name: "Install prerequisite: Pre-built dependencies"
-        if: steps.deps-cache.outputs.cache-hit != 'true'
-        run: |
-          curl -kLO https://cdn-fastly.obsproject.com/downloads/dependencies${{ env.WINDOWS_DEPS_VERSION }}.zip -f --retry 5 -C -
-          7z x dependencies${{ env.WINDOWS_DEPS_VERSION }}.zip -o"${{ github.workspace }}/cmbuild/deps"
+      # - name: "Install prerequisite: Pre-built dependencies"
+      #   if: steps.deps-cache.outputs.cache-hit != 'true'
+      #   run: |
+      #     curl -kLO https://cdn-fastly.obsproject.com/downloads/dependencies${{ env.WINDOWS_DEPS_VERSION }}.zip -f --retry 5 -C -
+      #     7z x dependencies${{ env.WINDOWS_DEPS_VERSION }}.zip -o"${{ github.workspace }}/cmbuild/deps"
       - name: "Build OBS"
         run: |
           git clone https://github.com/obsproject/obs-studio
