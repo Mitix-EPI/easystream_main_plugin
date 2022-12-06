@@ -100,15 +100,15 @@ jobs:
       #   run: |
       #     curl -kLO https://cdn-fastly.obsproject.com/downloads/dependencies${{ env.WINDOWS_DEPS_VERSION }}.zip -f --retry 5 -C -
       #     7z x dependencies${{ env.WINDOWS_DEPS_VERSION }}.zip -o"${{ github.workspace }}/cmbuild/deps"
+          # mkdir build64
+          # cd build64
+          # cmake -G"${{ env.CMAKE_GENERATOR }}" -A"x64" -DCMAKE_SYSTEM_VERSION="${{ env.CMAKE_SYSTEM_VERSION }}" -DDISABLE_PLUGINS=true -DDepsPath="${{ github.workspace }}/cmbuild/deps/win64" -DQTDIR="${{ github.workspace }}/cmbuild/QT/${{ env.QT_VERSION }}/msvc2019_64" -DCOPIED_DEPENDENCIES=FALSE -DCOPY_DEPENDENCIES=TRUE ..
+          # msbuild /m /p:Configuration=RelWithDebInfo .\obs-studio.sln
       - name: "Build OBS"
         run: |
           git clone https://github.com/obsproject/obs-studio
           cd obs-studio
-          pwsh ./CI/windows/01_install_dependencies.ps1
-          mkdir build64
-          cd build64
-          cmake -G"${{ env.CMAKE_GENERATOR }}" -A"x64" -DCMAKE_SYSTEM_VERSION="${{ env.CMAKE_SYSTEM_VERSION }}" -DDISABLE_PLUGINS=true -DDepsPath="${{ github.workspace }}/cmbuild/deps/win64" -DQTDIR="${{ github.workspace }}/cmbuild/QT/${{ env.QT_VERSION }}/msvc2019_64" -DCOPIED_DEPENDENCIES=FALSE -DCOPY_DEPENDENCIES=TRUE ..
-          msbuild /m /p:Configuration=RelWithDebInfo .\obs-studio.sln
+          pwsh ./CI/build-windows.ps1
       - name: "Build Plugin"
         working-directory: ${{ github.workspace }}
         run: |
