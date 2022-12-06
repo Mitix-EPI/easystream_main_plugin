@@ -68,3 +68,7 @@ ci/obs-studio
 
 # Support for Project snippet scope
 !.vscode/*.code-snippets
+
+# Custom
+out.log
+waveform2.wav
