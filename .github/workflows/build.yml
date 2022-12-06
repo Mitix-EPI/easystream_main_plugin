@@ -104,7 +104,7 @@ jobs:
         run: |
           git clone https://github.com/obsproject/obs-studio
           cd obs-studio
-          pwsh ./CI/windows/install_dependencies.ps1
+          pwsh ./CI/windows/01_install_dependencies.ps1
           mkdir build64
           cd build64
           cmake -G"${{ env.CMAKE_GENERATOR }}" -A"x64" -DCMAKE_SYSTEM_VERSION="${{ env.CMAKE_SYSTEM_VERSION }}" -DDISABLE_PLUGINS=true -DDepsPath="${{ github.workspace }}/cmbuild/deps/win64" -DQTDIR="${{ github.workspace }}/cmbuild/QT/${{ env.QT_VERSION }}/msvc2019_64" -DCOPIED_DEPENDENCIES=FALSE -DCOPY_DEPENDENCIES=TRUE ..
