@@ -4,7 +4,6 @@
 ## **Get requests**
 <br>
 
----
 ### **Getting all microphones data**
 
 * **Description**  
@@ -83,7 +82,6 @@ Récupération des données de toutes les actions enregistrées au niveau du ser
 
 ## **Set requests**
 
----
 ### **Setting automatic audio leveler** - *Audio compressor*
 * **Description**  
 Activation / désactivation la gestion de volume automatique sur une entrée audio.
@@ -221,7 +219,6 @@ Lorsque l'action est détectée, la réaction est déclenchée automatiquement.
 
 ## **Remove and Update requests**
 
----
 ### **Remove an action / reaction couple**  
 
 * **Description**  
