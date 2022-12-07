@@ -1,190 +1,369 @@
 # Server endpoint documentation
 
-### **Get requests**
+
+## **Get requests**
+<br>
+
+### **Getting all microphones data**
+
+* **Description**  
+Le client demande la liste de tous les micros ainsi que des données disponibles à leurs sujet.  
+
+* **Request**  
+```json
+{
+    "command": "getAllMics",
+}
+```
+
+* **Response**  
+```json
+{
+    "statusCode": "integer",
+    "message": "string",
+    "length": "integer",
+    "mics": [
+        {
+            "name": "string",
+            "level": "integer",
+            "isActive": "boolean",
+        },
+    ]
+}
+```
+
+<br>
 
 ---
-* `getAllMics`  
+### **Getting action / reaction couples**
 
-    * **Description**  
-    Le client demande la liste de tous les micros ainsi que des données disponibles à leurs sujet.  
+* **Description**  
+Récupération des données de toutes les couples actions / réaction enregistrés au niveau du serveur (plugin).  
 
-    * **Response**  
-    ```json
-    {
-        "statusCode": "integer",
-        "message": "string",
-        "length": "integer",
-        "mics": [
-            {
-                "name": "string",
-                "level": "integer",
-                "isActive": "boolean",
+* **Request**
+```json
+{
+    "command": "getActReactCouples",
+}
+```
+
+* **Response**
+```json
+{
+    "statusCode": "integer",
+    "message": "string",
+    "length": "integer",
+    "actReacts": [
+        {
+            "actReactId": "integer",
+            "isActive": "boolean",
+            "action": {
+                "actionId": "integer",
+                "type": "action_type",
+                "params": {
+                    "..." // Depends on action type
+                }
             },
-        ]
-    }
-    ```
-
----
-* `getActions`  
-
-    * **Description**  
-    Récupération des données de toutes les actions enregistrées au niveau du serveur.  
-
-    * **Response**
-    ```json
-    {
-        "statusCode": "integer",
-        "message": "string",
-        "length": "integer",
-        "actions": [
-            "actionData", // @see actionData type below
-        ]
-    }
-    ```
-
-    Une action est constituée de 3 éléments:  
-        - un nom (`string`)  
-        - un type (un `integer` correspondant au type de l'action)  
-        - un paramètre (`integer`)
-
-    * `actionData`
-    ```json
-    {
-        "name": "string",
-        "type": "integer",
-        "parameter": "integer"
-    }
-    ```
-
----
-* `getWordDetections` (?)  
-
-    * **Description**  
-    Récupération des couples *[détection de mots]* / `callback`  
-
-    * **Response**  
-    ```json
-    {
-        "length": "integer",
-        "data": [
-            {
-                "words": ["word1", "word2", "...", ],
-                "action": "actionData",
-            },
-            {
-                "...": "..."
+            "reaction": {
+                "reactionId": "integer",
+                "type": "reaction_type",
+                "params": {
+                    "..." // Depends on reaction type
+                }
             }
-        ]
-    }
-    ```
+        },
+        "..." // Next element
+    ]
+}
+```
 
 
-### **Set requests**
+<br>
 
----
-* `setAutoAudioLeveler`  
+## **Set requests**
 
-    * **Description**  
-    Activation / désactivation la gestion de volume automatique sur une entrée audio.
+### **Setting automatic audio leveler** - *Audio compressor*
+* **Description**  
+Activation / désactivation la gestion de volume automatique sur une entrée audio.
 
-    * **Request**
-    ```json
-    {
+* **Request**
+```json
+{
+    "command": "setAutoAudioLeveler",
+    "params": {
         "enable": "boolean",
-        "source": "string" // Nom de l'entrée audio (voir la requête getAllMics)
+        "source": "string", // Nom de l'entrée audio (voir la requête getAllMics)
     }
-    ```
+}
+```
 
-    * **Response**
-    ```json
-    {
-        "statusCode": "integer",
-        "message": "string",
-    }
-    ```
+* **Response**
+```json
+{
+    "statusCode": "integer",
+    "message": "string",
+}
+```
+
+<br>  
 
 ---
-* `setMicLevel`  
+### **Setting microphone input level**
+* **Description**  
+Mise à jour de la valeur d'entrée d’un microphone.  
 
-    * **Description**  
-    Mise à jour de la valeur d'entrée d’un microphone.  
-
-    * **Request**  
-    ```json
-    {
+* **Request**  
+```json
+{
+    "command": "setMicLevel",
+    "params": {
         "name": "string",
         "level": "integer",
         "setActive": "boolean",
-    },
-    ```
-
-    * **Response**  
-    ```json
-    {
-        "statusCode": "integer",
-        "message": "string",
     }
-    ```
+},
+```
 
-___
-* `setTranscriptSubscription`  
+* **Response**  
+```json
+{
+    "statusCode": "integer",
+    "message": "string",
+}
+```
 
-    * **Description**  
-    Activer / Désactiver l'abonnement à la transcription de l'entrée d'un microphone spécifique.  
-    Le paramètre `language` n'est pris en compte que si la transciption est activée.  
+<br>
 
-    * **Request**
-    ```json
-    {
+---
+### **Setting up transcription subscription**
+* **Description**  
+Activer / Désactiver l'abonnement à la transcription de l'entrée d'un microphone spécifique.  
+Le paramètre `language` n'est pris en compte que si la transciption est activée.  
+
+* **Request**
+```json
+{
+    "command": "setTranscriptSubscription",
+    "params": {
         "enable": "boolean",
         "language": "string", // IETF language tag
     }
-    ```
+}
+```
 
-    * **Response**
-    ```json
-    {
-        "statusCode": "integer",
-        "message": "string",
-        "subscriptionId": "integer"
-    }
-    ```
+* **Response**
+```json
+{
+    "statusCode": "integer",
+    "message": "string",
+    "subscriptionId": "integer"
+}
+```
 
-    Lorsque les sous-titres sont activés, le serveur enverras des paquets contenant la transcription en temps réel au client.  
+Lorsque la transcription est activée, le serveur enverra des paquets contenant la transcription en temps réel au client.  
 
-    * **Transcript**
-    ```json
-    {
-        "subscriptionId": "integer",
-        "startTime": "integer",
-        "duration": "integer",
-        "transcript": "string"
-    }
-    ```
+* **Transcript**
+```json
+{
+    "subscriptionId": "integer",
+    "startTime": "integer",
+    "duration": "integer",
+    "transcript": "string"
+}
+```
+
+<br>
 
 ---
-* `setWordDetection`  
+### **Setting an action / reaction couple**  
 
-    * **Description**  
-    Mise en place d'un `callback` lors de la détection d'un ou de plusieurs mot(s) / phrase(s).
-    Mise à jour des word detection (notamment pour les suppressions)
+* **Description**  
+Mise en place d'un couple action/reaction au niveau du plugin.  
+Lorsque l'action est détectée, la réaction est déclenchée automatiquement.  
 
-    * **Request**
-    ```json
-    {
-        "words": [
-            "word1",
-            "word2",
-            "word3",
-        ],
-        "callback": "actionData",
+* **Request**
+```json
+{
+    "command": "setActionReaction",
+    "params": {
+        "action": {
+            "type": "action_type",
+            "params": {
+                "..."
+            }
+        },
+        "reaction": {
+            "type": "reaction_type",
+            "params": {
+                "..."
+            }
+        }
     }
-    ```
+}
+```
 
-    * **Response**
-    ```json
-    {
-        "statusCode": "integer",
-        "message": "string"
+* **Response**
+```json
+{
+    "statusCode": "integer",
+    "message": "string",
+    "data": {
+        "actionId": "integer",
+        "reactionId": "integer",
+        "actReactId": "integer",
     }
-    ```
+}
+```
+
+<br>
+
+## **Remove and Update requests**
+
+### **Remove an action / reaction couple**  
+
+* **Description**  
+Suppression d'un couple action/reaction au niveau du plugin.  
+
+* **Request**
+```json
+{
+    "command": "removeActReact",
+    "params": {
+        "actReactId": "integer",
+    }
+}
+```
+
+* **Response**
+```json
+{
+    "statusCode": "integer",
+    "message": "string",
+}
+```
+
+<br>
+
+---
+### **Updating an action**  
+
+* **Description**  
+Mise à jour d'une action côté plugin.  
+L'action peut changer de type et / ou de paramètres.  
+Une fois mise à jour, l'action reste reliée à sa/ses réaction(s).  
+Si la requête est invalide, l'action reste inchangée.
+
+* **Request**
+```json
+{
+    "command": "updateAction",
+    "params": {
+        "actionId": "integer",
+        "type": "action_type",
+        "params": {
+            "..."
+        }
+    }
+}
+```
+
+* **Response**
+```json
+{
+    "statusCode": "integer",
+    "message": "string",
+}
+```
+
+<br>
+
+---
+### **Update reaction**  
+
+* **Description**  
+Mise à jour d'une réaction côté plugin.  
+La réaction peut changer de type et / ou de paramètres.  
+Une fois mise à jour, la réaction reste reliée à son/ses action(s).  
+Si la requête est invalide, l'action reste inchangée.
+
+* **Request**
+```json
+{
+    "command": "updateReaction",
+    "params": {
+        "reactionId": "integer",
+        "type": "reaction_type",
+        "params": {
+            "..."
+        }
+    }
+}
+```
+
+* **Response**
+```json
+{
+    "statusCode": "integer",
+    "message": "string",
+}
+```
+
+<br>
+<br>
+
+# **Actions / Reactions**
+
+## *Actions*
+
+**Word detection**
+```json
+{
+    "type": "WORD_DETECT",
+    "params": {
+        "words": ["word1", "word2", "..."]
+    },
+}
+```
+
+**Application launch**
+```json
+{
+    "type": "APP_LAUNCH",
+    "params": {
+        "app_name": "app_identifier"
+    },
+}
+```
+
+**Key pressed**
+```json
+{
+    "type": "KEY_PRESSED",
+    "params": {
+        "key": "key_identifier"
+    },
+}
+```
+
+---
+## *Reactions*
+
+**Scene switch**
+```json
+{
+    "type": "SCENE_SWITCH",
+    "params": {
+        "scene": "scene_identifier"
+    }
+}
+```
+
+**Toggle audio compressor**
+```json
+{
+    "type": "TOGGLE_AUDIO_COMPRESSOR",
+    "params": {
+        "audio-source": "audio_source_identifier"
+    }
+}
+```

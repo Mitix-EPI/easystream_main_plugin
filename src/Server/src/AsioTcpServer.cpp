@@ -13,15 +13,21 @@ namespace es::server
     {
         /* Getters */
         _handler["getAllMics"] = &AsioTcpServer::getAllMics;
-        // _handler["getActions"]
-        // _handler["getWordDetections"]
+        // _handler["getActReactCouples"]
 
         /* Setters */
         _handler["setAutoAudioLeveler"] = &AsioTcpServer::setAutoAudioLeveler;
         _handler["setMicLevel"] = &AsioTcpServer::setMicLevel;
         // _handler["setTranscriptSubscription"]
-        // _handler["setWordDetection"]
+        // _handler["setActionReaction"]
         _handler["setSceneSwapTrigger"] = &AsioTcpServer::setSceneSwapTrigger;
+
+        /* Removers */
+        // _handler["removeActReact"]
+
+        /* Updaters */
+        // _handler["updateAction"];
+        // _handler["updateReaction"];
     }
 
     AsioTcpServer::~AsioTcpServer()
