@@ -108,18 +108,23 @@ Activation / désactivation la gestion de volume automatique sur une entrée aud
 <br>  
 
 ---
-### **Setting microphone input level**
+### **Setting microphones input level**
 * **Description**  
-Mise à jour de la valeur d'entrée d’un microphone.  
+Mise à jour de la valeur d'entrée de microphones.  
 
 * **Request**  
 ```json
 {
     "command": "setMicLevel",
     "params": {
-        "name": "string",
-        "level": "integer",
-        "setActive": "boolean",
+        "mics": [
+            {
+                "name": "string",
+                "level": "integer",
+                "setActive": "boolean",
+            },
+            "..."
+        ]
     }
 },
 ```
@@ -135,15 +140,15 @@ Mise à jour de la valeur d'entrée d’un microphone.
 <br>
 
 ---
-### **Setting up transcription subscription**
+### **Enabling / Disabling subtitles**
 * **Description**  
-Activer / Désactiver l'abonnement à la transcription de l'entrée d'un microphone spécifique.  
+Activer / Désactiver les sous-titres transcrit de l'entrée d'un microphone spécifique.  
 Le paramètre `language` n'est pris en compte que si la transciption est activée.  
 
 * **Request**
 ```json
 {
-    "command": "setTranscriptSubscription",
+    "command": "setSubscription",
     "params": {
         "enable": "boolean",
         "language": "string", // IETF language tag
@@ -156,19 +161,6 @@ Le paramètre `language` n'est pris en compte que si la transciption est activé
 {
     "statusCode": "integer",
     "message": "string",
-    "subscriptionId": "integer"
-}
-```
-
-Lorsque la transcription est activée, le serveur enverra des paquets contenant la transcription en temps réel au client.  
-
-* **Transcript**
-```json
-{
-    "subscriptionId": "integer",
-    "startTime": "integer",
-    "duration": "integer",
-    "transcript": "string"
 }
 ```
 
