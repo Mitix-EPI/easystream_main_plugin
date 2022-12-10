@@ -106,7 +106,7 @@ jobs:
           # msbuild /m /p:Configuration=RelWithDebInfo .\obs-studio.sln
       - name: "Build OBS"
         run: |
-          git clone https://github.com/obsproject/obs-studio
+          git clone --recursive https://github.com/obsproject/obs-studio
           cd obs-studio
           pwsh ./CI/build-windows.ps1
       - name: "Build Plugin"

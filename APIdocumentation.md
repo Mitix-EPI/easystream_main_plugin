@@ -38,7 +38,7 @@ Le client demande la liste de tous les micros ainsi que des données disponibles
 ### **Getting action / reaction couples**
 
 * **Description**  
-Récupération des données de toutes les actions enregistrées au niveau du serveur.  
+Récupération des données de toutes les couples actions / réaction enregistrés au niveau du serveur (plugin).  
 
 * **Request**
 ```json
