@@ -148,7 +148,7 @@ Le paramètre `language` n'est pris en compte que si la transciption est activé
 * **Request**
 ```json
 {
-    "command": "setSubscription",
+    "command": "setSubtitles",
     "params": {
         "enable": "boolean",
         "language": "string", // IETF language tag
