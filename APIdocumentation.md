@@ -178,6 +178,7 @@ Lorsque l'action est détectée, la réaction est déclenchée automatiquement.
 {
     "command": "setActionReaction",
     "params": {
+        "name": "string",
         "action": {
             "type": "action_type",
             "params": {
@@ -200,6 +201,7 @@ Lorsque l'action est détectée, la réaction est déclenchée automatiquement.
     "statusCode": "integer",
     "message": "string",
     "data": {
+        "name": "string",
         "actionId": "integer",
         "reactionId": "integer",
         "actReactId": "integer",
@@ -231,6 +233,10 @@ Suppression d'un couple action/reaction au niveau du plugin.
 {
     "statusCode": "integer",
     "message": "string",
+    "data": {
+        "name": "string",
+        "actReactId": "integer"
+    }
 }
 ```
 
@@ -264,6 +270,10 @@ Si la requête est invalide, l'action reste inchangée.
 {
     "statusCode": "integer",
     "message": "string",
+    "data": {
+        "name": "string",
+        "actionId": "integer"
+    }
 }
 ```
 
@@ -297,6 +307,10 @@ Si la requête est invalide, l'action reste inchangée.
 {
     "statusCode": "integer",
     "message": "string",
+    "data": {
+        "name": "string",
+        "actionId": "integer"
+    }
 }
 ```
 
