@@ -55,9 +55,11 @@ Récupération des données de toutes les couples actions / réaction enregistr�
     "length": "integer",
     "actReacts": [
         {
+            "name": "string",
             "actReactId": "integer",
             "isActive": "boolean",
             "action": {
+                "name": "string",
                 "actionId": "integer",
                 "type": "action_type",
                 "params": {
